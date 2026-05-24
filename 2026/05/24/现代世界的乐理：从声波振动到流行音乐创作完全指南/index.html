@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    
+    <meta name="author" content="Aar0n">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2026/05/24/现代世界的乐理：从声波振动到流行音乐创作完全指南/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="现代世界的乐理：从声波振动到流行音乐创作完全指南">
+<meta property="og:url" content="http://example.com/2026/05/24/%E7%8E%B0%E4%BB%A3%E4%B8%96%E7%95%8C%E7%9A%84%E4%B9%90%E7%90%86%EF%BC%9A%E4%BB%8E%E5%A3%B0%E6%B3%A2%E6%8C%AF%E5%8A%A8%E5%88%B0%E6%B5%81%E8%A1%8C%E9%9F%B3%E4%B9%90%E5%88%9B%E4%BD%9C%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/redefine-og.webp">
+<meta property="article:published_time" content="2026-05-24T14:24:12.000Z">
+<meta property="article:modified_time" content="2026-05-24T14:25:29.752Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            现代世界的乐理：从声波振动到流行音乐创作完全指南 | Aar0n&#39;s Blog
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+        
+<script src="/js/build/libs/anime.min.js"></script>
+
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"left","image_caption":false,"link_icon":true,"delete_mask":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":false},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":true,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":true,"custom_message":"EXCITED TO MEET YOU!# Custom message. If empty, the site title will be displayed"},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"A NICE DAY TO XXXXX!!!","subtitle":{"text":["---have dreams---have fun---"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":[{"icon":"fa-brands fa-github","url":null},{"icon":"fa-brands fa-twitter","url":null},{"icon":"fa-solid fa-at","url":"3553319143@qq.com"},{"icon":"fa-brands fa-telegram","url":null},{"icon":"/images/custom-icon.svg","url":null}],"qrs":[{"icon":"fa-brands fa-weixin","qr":null},{"icon":"/images/custom-icon.svg","qr":null}]}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":true,"type":"fixed","audios":[{"name":"Imagine","artist":"John Lennon","url":"https://evan.beee.top/music/Imagine%20-%20John%20Lennon.mp3","cover":"https://evan.beee.top/music/covers/Lennon_Imagine_Sleeve_1975.jpg","lrc":null},{"name":"Something Just Like This","artist":"Coldplay","url":"https://evan.beee.top/music/Something%20Just%20Like%20This%20-%20The%20Chainsmokers%E3%80%81Coldplay.mp3","cover":"https://evan.beee.top/music/covers/Something_Just_Like_This.png"}]},"mermaid":{"enable":false,"version":"11.4.1","theme":{"light":"default","dark":"dark"}}},"version":"2.9.0","navbar":{"auto_hide":true,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"MAIN":{"path":"https://www.aar0n-playstation.fun/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur","masonry":{"batch_size":12,"initial_batch_size":24}},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"TIME TO STAY ACTIVE","show_on_mobile":true,"links":null},"article_date_format":"YYYY-MM-DD HH:mm:ss","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footer":{"runtime":true,"icon":"<i class=\"fa-solid fa-heart fa-beat\" style=\"--fa-animation-duration: 0.5s; color: #f54545\"></i>","start":"2022/8/17 11:45:14","statistics":true,"customize":null,"icp":{"enable":false,"number":null,"url":null}},"footerStart":"2022/8/17 11:45:14","mermaid":{"style":{"light":"default","dark":"dark"}}};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.i18n = {"search":"Search...","toc":"On this page","prev":"Prev","next":"Next","prev_posts":"Prev posts","next_posts":"Next posts","page":"Page %d","recent_posts":"Recent Posts","share":"Share","powered_by":"POWERED BY %s","theme":"THEME","rss_feed":"RSS Feed","category":"Category","categories":"Categories","tag":"Tag","tags":"Tags","post":"Post","posts":"Posts","tagcloud":"Tag Cloud","comment":"Comment","comments":"Comments","home":"Home","archive":"Archive","archives":"Archives","top":"TOP","sticky":"Sticky","go-back-home":"Go Back Home","masonry_loading":"Loading photos...","image_viewer":"Image viewer","close":"Close","exif":{"title":"EXIF","cards":{"camera":"Camera","lens":"Lens","exposure":"Exposure","other":"Other"},"fields":{"make":"Brand","model":"Model","date_taken":"Date taken","lens_model":"Lens","focal_length":"Focal length","focus_mode":"Focus mode","shutter":"Shutter","aperture":"Aperture","iso":"ISO","exposure_program":"Exposure program","exposure_compensation":"Exposure compensation","metering_mode":"Metering mode","flash":"Flash","white_balance":"White balance","latitude":"Latitude","longitude":"Longitude","altitude":"Altitude"},"status":{"loading":"Loading...","no_exif":"No EXIF available","library_missing":"EXIF library not loaded","image_source_missing":"Image source unavailable","unavailable":"EXIF unavailable (blocked by CORS or missing metadata)","flag_unavailable":"EXIF unavailable"}},"about":"About","changelog":"Changelog","links":"Links","link":"Link","friends":"Friends","friend":"Friend","timeline":"Timeline","shuoshuo":"Shuoshuo","bookmarks":"Bookmarks","site_uv":"VISITOR COUNT","site_pv":"TOTAL PAGE VIEWS","read_more":"Read more","wordcount":"Words","min2read":"Mins","status":"Status","runtime":"Blog up for","days":"days","hours":"hrs","minutes":"Min","seconds":"Sec","optimized_by":"and Optimized by Evan","rights":"All Rights Reserved","site_posts":"%s posts in total","site_wordcount":"%s words in total","copyright":{"author":"Author","title":"Title","link":"Link","create_time":"Created at","update_time":"Updated at","license_title":"License","license_content":"This work is licensed under %s.","all_rights_reserved":"All Rights Reserved &#169; %s","public_domain":"This work is in the public domain."},"ago":{"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"},"create_time":"Created","update_time":"Updated","expired":"This post is written %s days ago, and the content may not be up to date."};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+	<div class="progress-bar-container">
+	
+	<span class="scroll-progress-bar"></span>
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        EXCITED TO MEET YOU!# Custom message. If empty, the site title will be displayed
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({ loop: true })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [20, 0],
+                translateZ: 0,
+                opacity: [0, 1],
+                filter: ['blur(5px)', 'blur(0px)'],
+                easing: "easeOutExpo",
+                duration: 1200,
+                delay: (el, i) => 300 + 20 * i,
+            })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [0, -20],
+                opacity: [1, 0],
+                filter: ['blur(0px)', 'blur(5px)'],
+                easing: "easeInExpo",
+                duration: 1000,
+                delay: (el, i) => 15 * i,
+                complete: function() {
+                    hidePreloader();
+                }
+            }, '-=700');
+
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Aar0n&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   target="_blank" rel="noopener" href="https://www.aar0n-playstation.fun/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    MAIN
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           target="_blank" rel="noopener" href="https://www.aar0n-playstation.fun/"
+                        >
+                            <span>
+                                MAIN
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">2</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">现代世界的乐理：从声波振动到流行音乐创作完全指南</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] shrink-0 rounded-medium border border-border-color p-px">
+				<img src="/images/redefine-avatar.svg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">Aar0n</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv1</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2026-05-24 22:24:12</span>
+        <span class="mobile">2026-05-24 22:24:12</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-05-24 22:25:29</span>
+            <span class="mobile">2026-05-24 22:25:29</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<blockquote>
+<p><strong>适合读者</strong>：零基础至中级音乐爱好者<br><strong>阅读时长</strong>：约60分钟（可分章节阅读）<br><strong>内容概要</strong>：系统讲解现代西方音乐理论基础，涵盖声学物理、音程体系、十二平均律、七种调式、和弦构建、和弦进行、节奏节拍、现代特殊语言，以及从理论到创作的实战方法。<br><strong>使用建议</strong>：建议通读后收藏，需要时按目录查阅具体章节。</p>
+</blockquote>
+<hr>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li><a href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%A3%B0%E9%9F%B3%E7%9A%84%E7%89%A9%E7%90%86%E6%9C%AC%E8%B4%A8%E9%9F%B3%E4%B9%90%E4%BB%8E%E4%BD%95%E8%80%8C%E6%9D%A5">第一章  声音的物理本质：音乐从何而来</a></li>
+<li><a href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E9%9F%B3%E9%AB%98%E4%B8%8E%E9%9F%B3%E7%A8%8B%E9%9F%B3%E4%B9%90%E7%9A%84%E8%B7%9D%E7%A6%BB%E6%84%9F">第二章  音高与音程：音乐的距离感</a></li>
+<li><a href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%8D%81%E4%BA%8C%E5%B9%B3%E5%9D%87%E5%BE%8B%E7%8E%B0%E4%BB%A3%E9%9F%B3%E4%B9%90%E7%9A%84%E5%9F%BA%E7%9F%B3">第三章  十二平均律：现代音乐的基石</a></li>
+<li><a href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E9%9F%B3%E9%98%B6%E4%B8%8E%E8%B0%83%E5%BC%8F%E9%9F%B3%E4%B9%90%E7%9A%84%E8%89%B2%E5%BD%A9%E8%AF%AD%E8%A8%80">第四章  音阶与调式：音乐的色彩语言</a></li>
+<li><a href="#%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%92%8C%E5%BC%A6%E9%9F%B3%E7%AC%A6%E7%9A%84%E5%8C%96%E5%AD%A6%E5%8F%8D%E5%BA%94">第五章  和弦：音符的化学反应</a></li>
+<li><a href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%92%8C%E5%BC%A6%E8%BF%9B%E8%A1%8C%E6%B5%81%E8%A1%8C%E9%9F%B3%E4%B9%90%E7%9A%84%E5%9F%BA%E5%9B%A0%E5%AF%86%E7%A0%81">第六章  和弦进行：流行音乐的基因密码</a></li>
+<li><a href="#%E7%AC%AC%E4%B8%83%E7%AB%A0-%E8%8A%82%E5%A5%8F%E4%B8%8E%E8%8A%82%E6%8B%8D%E9%9F%B3%E4%B9%90%E7%9A%84%E9%AA%A8%E6%9E%B6">第七章  节奏与节拍：音乐的骨架</a></li>
+<li><a href="#%E7%AC%AC%E5%85%AB%E7%AB%A0-%E7%8E%B0%E4%BB%A3%E9%9F%B3%E4%B9%90%E7%9A%84%E7%89%B9%E6%AE%8A%E8%AF%AD%E8%A8%80">第八章  现代音乐的特殊语言</a></li>
+<li><a href="#%E7%AC%AC%E4%B9%9D%E7%AB%A0-%E7%BB%8F%E5%85%B8%E6%AD%8C%E6%9B%B2%E4%B9%90%E7%90%86%E8%A7%A3%E6%9E%90">第九章  经典歌曲乐理解析</a></li>
+<li><a href="#%E7%AC%AC%E5%8D%81%E7%AB%A0-%E4%BB%8E%E7%90%86%E8%AE%BA%E5%88%B0%E5%88%9B%E4%BD%9C%E5%AE%9E%E6%88%98%E6%96%B9%E6%B3%95%E8%AE%BA">第十章  从理论到创作：实战方法论</a></li>
+<li><a href="#%E9%99%84%E5%BD%95-%E9%9F%B3%E4%B9%90%E6%9C%AF%E8%AF%AD%E9%80%9F%E6%9F%A5%E8%A1%A8">附录  音乐术语速查表</a></li>
+</ul>
+<hr>
+<h2 id="第一章-声音的物理本质：音乐从何而来"><a href="#第一章-声音的物理本质：音乐从何而来" class="headerlink" title="第一章 声音的物理本质：音乐从何而来"></a>第一章 声音的物理本质：音乐从何而来</h2><h3 id="1-1-声波：音乐的”原材料”"><a href="#1-1-声波：音乐的”原材料”" class="headerlink" title="1.1 声波：音乐的”原材料”"></a>1.1 声波：音乐的”原材料”</h3><p>音乐的本质是<strong>声音</strong>，而声音的本质是<strong>振动</strong>。当一个物体（如吉他的弦、钢琴的锤、人的声带）振动时，它周围的空气分子会被交替压缩和稀疏，形成肉眼看不见但耳朵能捕捉的<strong>声波</strong>。</p>
+<p>声波有三个最基本的物理参数：</p>
+<table>
+<thead>
+<tr>
+<th align="center">参数名称</th>
+<th align="center">物理定义</th>
+<th align="center">在音乐中的表现</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>振幅（Amplitude）</strong></td>
+<td align="center">振动过程中偏离平衡位置的最大距离</td>
+<td align="center">音量（响度），振幅越大声音越响</td>
+</tr>
+<tr>
+<td align="center"><strong>频率（Frequency）</strong></td>
+<td align="center">单位时间内的振动次数，单位是赫兹（Hz）</td>
+<td align="center">音高，频率越高音高越高</td>
+</tr>
+<tr>
+<td align="center"><strong>波形（Waveform）</strong></td>
+<td align="center">振动随时间变化的形态模式</td>
+<td align="center">音色，不同乐器即使音高相同听起来也不同</td>
+</tr>
+</tbody></table>
+<h3 id="1-2-频率与音高的关系"><a href="#1-2-频率与音高的关系" class="headerlink" title="1.2 频率与音高的关系"></a>1.2 频率与音高的关系</h3><p>音高与频率之间不是简单的线性关系，而是<strong>对数关系</strong>。这是理解音乐物理学最关键的一点。</p>
+<p>以标准音 <strong>A4（钢琴上中央C右边的A）</strong> 为例，它的频率是 <strong>440 Hz</strong>，这意味着它每秒振动440次。</p>
+<p>从 A4 向上一个八度到 A5，频率翻倍为 880 Hz；向下到 A3，频率减半为 220 Hz。这说明：</p>
+<blockquote>
+<p><strong>规律</strong>：每升高一个八度，频率 × 2；每降低一个八度，频率 ÷ 2。</p>
+</blockquote>
+<p>这个规律在音乐中非常重要，因为它解释了为什么不同八度的同一个音听起来”像”同一个音——因为高频恰好是低频的整数倍，谐波高度重合，人的听觉系统会将它们识别为同一音高家族的不同成员。</p>
+<h3 id="1-3-人类听觉的秘密"><a href="#1-3-人类听觉的秘密" class="headerlink" title="1.3 人类听觉的秘密"></a>1.3 人类听觉的秘密</h3><p>人类能听到的频率范围大约是 <strong>20 Hz 到 20,000 Hz</strong>。但这个范围随着年龄增长会逐渐缩小，尤其是高频部分。</p>
+<p>更神奇的是，人耳对 <strong>1000 Hz 到 4000 Hz</strong> 这个范围最为敏感——这恰好是人声说话和唱歌的主要频率范围。大自然花了数百万年塑造了我们的耳朵，让它对人声最为敏感，因为人声是原始人类最重要的交流工具。</p>
+<p>在音乐中，这个特性意味着：</p>
+<ul>
+<li>人声为主旋律的歌曲最容易”入耳”</li>
+<li>贝斯和鼓的低频（60 Hz - 250 Hz）不需要太大音量就能产生”存在感”</li>
+<li>吉他等乐器的中高频（250 Hz - 4000 Hz）最容易与 vocal 竞争，需要 EQ 调整</li>
+</ul>
+<h3 id="1-4-谐波与音色的奥秘"><a href="#1-4-谐波与音色的奥秘" class="headerlink" title="1.4 谐波与音色的奥秘"></a>1.4 谐波与音色的奥秘</h3><p>为什么钢琴弹出来的 A4 和小提琴拉出来的 A4 完全不同？</p>
+<p>答案在于 <strong>谐波（Harmonics &#x2F; Overtones）</strong>。</p>
+<p>当一个音发声时，振动源（弦、空气柱等）不只做一个完整的振动，而是同时进行多重振动：</p>
+<ul>
+<li><strong>基音（Fundamental）</strong>：振动源整体振动一次产生的音，决定我们感知的音高</li>
+<li><strong>泛音（Overtones）</strong>：振动源分段振动（二等分、三等分、四等分……）同时产生的音，叠加在基音上</li>
+</ul>
+<p>以一根 A4 弦为例（基频 440 Hz）：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────────────────────────────────────┐</span><br><span class="line">│  泛音序号    │  频率        │  与基音的音程关系              │</span><br><span class="line">├──────────────────────────────────────────────────────────────┤</span><br><span class="line">│  基音（第1泛音）│  440 Hz     │  纯八度                       │</span><br><span class="line">│  第2泛音     │  880 Hz      │  纯八度（同度重叠）            │</span><br><span class="line">│  第3泛音     │  1320 Hz     │  纯十二度（八度+五度）          │</span><br><span class="line">│  第4泛音     │  1760 Hz     │  两个八度                      │</span><br><span class="line">│  第5泛音     │  2200 Hz     │  大三度（在一个八度+大三度内）   │</span><br><span class="line">│  第6泛音     │  2640 Hz     │  小三度（在一个八度+小三度内）   │</span><br><span class="line">│  ……         │  ……         │  频率越高，音量越弱，逐渐消失    │</span><br><span class="line">└──────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<p>不同乐器的泛音结构完全不同：</p>
+<ul>
+<li><strong>钢琴</strong>的泛音衰减较快，音色”干脆”</li>
+<li><strong>小提琴</strong>的泛音丰富且持续，音色”悠长”</li>
+<li><strong>长笛</strong>几乎没有偶数泛音，音色”纯净”</li>
+<li><strong>电吉他失真</strong>会人为增强某些泛音，产生”粗犷”的质感</li>
+</ul>
+<p>理解谐波是理解音色的关键，也是混音、编曲、配器的理论基础。</p>
+<h3 id="1-5-声音的空间属性"><a href="#1-5-声音的空间属性" class="headerlink" title="1.5 声音的空间属性"></a>1.5 声音的空间属性</h3><p>真实世界中的声音还有三个空间维度：</p>
+<p><strong>1. 音场（Sound Field）</strong></p>
+<ul>
+<li><strong>声源宽度（Stereo Width）</strong>：左-右定位</li>
+<li><strong>纵深（Depth）</strong>：前-后层次感，通过混响（Reverb）和延迟（Delay）实现</li>
+</ul>
+<p><strong>2. 动态（Dynamic）</strong></p>
+<ul>
+<li>声音从最弱到最强的变化范围</li>
+<li>古典音乐的动态范围可达 50 dB 以上</li>
+<li>现代流行音乐动态范围被压缩得很小（ Loudness War 的代价）</li>
+</ul>
+<p><strong>3. 空间混响（Reverb）</strong></p>
+<ul>
+<li>不同空间（房间、大厅、教堂、室外）产生不同的反射声</li>
+<li>混响时间（RT60）决定空间的”大小感”</li>
+<li>现代音乐几乎所有轨道都加了一定量的混响来”融合”声部</li>
+</ul>
+<hr>
+<h2 id="第二章-音高与音程：音乐的距离感"><a href="#第二章-音高与音程：音乐的距离感" class="headerlink" title="第二章 音高与音程：音乐的距离感"></a>第二章 音高与音程：音乐的距离感</h2><h3 id="2-1-什么是音程？"><a href="#2-1-什么是音程？" class="headerlink" title="2.1 什么是音程？"></a>2.1 什么是音程？</h3><p><strong>音程（Interval）</strong> 是两个音高之间的距离，是乐理中最核心、最基础的概念。想象一条直线上的两个点，音程就是它们之间的”距离”。</p>
+<p>没有音程，音乐将是一堆孤立无关联的音符；有了音程，音符才能被组织成旋律与和声。</p>
+<p>在乐理中，音程有<strong>两个维度</strong>的名字：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">┌────────────────────────────────────────────────────────────┐</span><br><span class="line">│  例：C 到 E 这个音程                                    │</span><br><span class="line">├────────────────────────────────────────────────────────────┤</span><br><span class="line">│  第一维度：度数（Number）→ 从C数到E，跨越了C-D-E三个音级  │</span><br><span class="line">│                        → 三度                            │</span><br><span class="line">│                                                            │</span><br><span class="line">│  第二维度：性质（Quality）→ C到E是全音+全音，共2个半音    │</span><br><span class="line">│                        → 大三度                          │</span><br><span class="line">│                                                            │</span><br><span class="line">│  完整名称：大三度（Major Third）                           │</span><br><span class="line">└────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="2-2-度数：跨越了多少个”台阶”"><a href="#2-2-度数：跨越了多少个”台阶”" class="headerlink" title="2.2 度数：跨越了多少个”台阶”"></a>2.2 度数：跨越了多少个”台阶”</h3><p>在自然音阶（C-D-E-F-G-A-B）中，从根音开始计数：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">C - D - E - F - G - A - B - C</span><br><span class="line">1   2   3   4   5   6   7   8</span><br><span class="line">│   │   │   │   │   │   │   │</span><br><span class="line">│   │   │   │   │   │   └── 八度（Octave）</span><br><span class="line">│   │   │   │   │   └────── 七度（Seventh）</span><br><span class="line">│   │   │   │   └───────── 六度（Sixth）</span><br><span class="line">│   │   │   └──────────── 五度（Fifth）</span><br><span class="line">│   │   └──────────────── 四度（Fourth）</span><br><span class="line">│   └──────────────────── 三度（Third）</span><br><span class="line">└───────────────────────── 二度（Second）</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="2-3-音程的性质：大、小、增、减、纯"><a href="#2-3-音程的性质：大、小、增、减、纯" class="headerlink" title="2.3 音程的性质：大、小、增、减、纯"></a>2.3 音程的性质：大、小、增、减、纯</h3><p>度数告诉我们跨越了多少个音级，但同样叫”三度”，C→E 和 C→Eb 听起来完全不同——这时需要用<strong>性质（Quality）</strong>来区分：</p>
+<table>
+<thead>
+<tr>
+<th align="center">性质</th>
+<th align="center">符号</th>
+<th align="center">含义</th>
+<th align="center">协和度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>纯（Perfect）</strong></td>
+<td align="center">P</td>
+<td align="center">最自然、最和谐的距离</td>
+<td align="center">完全协和</td>
+</tr>
+<tr>
+<td align="center"><strong>大（Major）</strong></td>
+<td align="center">M</td>
+<td align="center">较大的距离（全音）</td>
+<td align="center">不完全协和</td>
+</tr>
+<tr>
+<td align="center"><strong>小（Minor）</strong></td>
+<td align="center">m</td>
+<td align="center">较大的距离减半音</td>
+<td align="center">不完全协和</td>
+</tr>
+<tr>
+<td align="center"><strong>增（Augmented）</strong></td>
+<td align="center">A &#x2F; aug</td>
+<td align="center">比大&#x2F;纯多半音</td>
+<td align="center">不协和</td>
+</tr>
+<tr>
+<td align="center"><strong>减（Diminished）</strong></td>
+<td align="center">d &#x2F; dim</td>
+<td align="center">比小&#x2F;纯少半音</td>
+<td align="center">不协和</td>
+</tr>
+</tbody></table>
+<p><strong>记忆技巧</strong>：</p>
+<ul>
+<li>“纯”只用于 <strong>一度、四度、五度、八度</strong>（这四个是最自然、最和谐的距离）</li>
+<li>“大&#x2F;小”用于 <strong>二度、三度、六度、七度</strong></li>
+</ul>
+<h3 id="2-4-音程对照表"><a href="#2-4-音程对照表" class="headerlink" title="2.4 音程对照表"></a>2.4 音程对照表</h3><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">┌────────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│  音程名称        │  包含半音数    │ 协和度       │ 听感特征            │</span><br><span class="line">├────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  纯一度          │  0             │ 完全协和     │ 同一音，完全统一    │</span><br><span class="line">│  小二度          │  1             │ 不协和       │ 半音，极其刺耳      │</span><br><span class="line">│  大二度          │  2             │ 不协和       │ 全音，轻度紧张      │</span><br><span class="line">│  小三度          │  3             │ 不完全协和   │ 柔和、忧郁          │</span><br><span class="line">│  大三度          │  4             │ 不完全协和   │ 明亮、愉悦          │</span><br><span class="line">│  纯四度          │  5             │ 完全协和     │ 稳定、有力          │</span><br><span class="line">│  三全音/增四度   │  6             │ 不协和       │ 极度紧张、神秘      │</span><br><span class="line">│  减五度          │  6             │ 不协和       │ 三全音的别名        │</span><br><span class="line">│  纯五度          │  7             │ 完全协和     │ 最和谐、空灵        │</span><br><span class="line">│  小六度          │  8             │ 不完全协和   │ 深情、怀旧          │</span><br><span class="line">│  大六度          │  9             │ 不完全协和   │ 开阔、明朗          │</span><br><span class="line">│  小七度          │  10            │ 不协和       │ 爵士、蓝调味        │</span><br><span class="line">│  大七度          │  11            │ 不协和       │ 梦幻、复杂          │</span><br><span class="line">│  纯八度          │  12            │ 完全协和     │ 完全和谐、扩展      │</span><br><span class="line">└────────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="2-5-三全音：音乐中最不安分的音程"><a href="#2-5-三全音：音乐中最不安分的音程" class="headerlink" title="2.5 三全音：音乐中最不安分的音程"></a>2.5 三全音：音乐中最不安分的音程</h3><p><strong>三全音（Tritone）</strong> 跨越 6 个半音（减五度 &#x3D; 增四度），是距离根音最远的自然音程。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C 到 F#（增四度）：C - D - E - F - F#</span><br><span class="line">                  半音数：2 + 2 + 1 + 1 = 6</span><br><span class="line"></span><br><span class="line">C 到 Gb（减五度）：C - D - E - F - G - Gb</span><br><span class="line">                  半音数：2 + 2 + 1 + 2 + 1 = 8 → 修正后 = 6</span><br></pre></td></tr></table></figure></div>
+
+<p>三全音是协和度的分水岭：在它两边的音程是协和的，超过它就变得不协和。</p>
+<p><strong>三全音的历史</strong>：</p>
+<ul>
+<li>中世纪教堂音乐中，三全音被认为是”魔鬼的音程”（Diabolus in Musica），禁止使用</li>
+<li>文艺复兴后被接受，广泛用于：<ul>
+<li>歌剧中的”恶魔角色动机”</li>
+<li>爵士音乐中的 tritone substitution</li>
+<li>电影配乐中的神秘&#x2F;危险场景</li>
+<li>摇滚&#x2F;金属的失真音色</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-6-音程的转位"><a href="#2-6-音程的转位" class="headerlink" title="2.6 音程的转位"></a>2.6 音程的转位</h3><p>音程转位是将根音移到八度上方（或将冠音移到八度下方）：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">转位规律：</span><br><span class="line">┌──────────────────────────────────────┐</span><br><span class="line">│  原位音程 + 转位音程 = 9            │</span><br><span class="line">│                                      │</span><br><span class="line">│  例如：                               │</span><br><span class="line">│  大三度转位 → 小六度（3 + 6 = 9）    │</span><br><span class="line">│  纯五度转位 → 纯四度（5 + 4 = 9）    │</span><br><span class="line">│  小七度转位 → 大二度（7 + 2 = 9）    │</span><br><span class="line">└──────────────────────────────────────┘</span><br><span class="line"></span><br><span class="line">转位性质变化规律：</span><br><span class="line">- 大 ↔ 小</span><br><span class="line">- 增 ↔ 减</span><br><span class="line">- 纯 → 纯（保持不变）</span><br></pre></td></tr></table></figure></div>
+
+<p>转位在四部和声编配、键盘和声演奏中非常有用——当一个声部无法跳进时，可以用转位保持声部平滑。</p>
+<h3 id="2-7-音程的情感色彩"><a href="#2-7-音程的情感色彩" class="headerlink" title="2.7 音程的情感色彩"></a>2.7 音程的情感色彩</h3><p>不同音程在大调旋律中有不同的情感暗示：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">上行大跳（根音 → 大六度/大七度/八度）：</span><br><span class="line">  → 激昂、上升、期待、戏剧性</span><br><span class="line">  → 典型应用：国歌高潮、主题曲副歌</span><br><span class="line"></span><br><span class="line">下行大跳（根音 ← 大六度/大七度/八度）：</span><br><span class="line">  → 坚定、归宿、庄严</span><br><span class="line"></span><br><span class="line">上行小跳（根音 → 大三度/纯四度）：</span><br><span class="line">  → 温暖、舒适、确定</span><br><span class="line"></span><br><span class="line">半音进行（根音 → 小二度）：</span><br><span class="line">  → 紧张、悬疑、推进</span><br><span class="line"></span><br><span class="line">纯五度上行（C → G）：</span><br><span class="line">  → 开放、阳光、上升但不激进</span><br></pre></td></tr></table></figure></div>
+
+<p>理解音程的情感色彩，是从”弹音符”到”讲故事”的关键一步。</p>
+<hr>
+<h2 id="第三章-十二平均律：现代音乐的基石"><a href="#第三章-十二平均律：现代音乐的基石" class="headerlink" title="第三章 十二平均律：现代音乐的基石"></a>第三章 十二平均律：现代音乐的基石</h2><h3 id="3-1-为什么需要十二平均律？"><a href="#3-1-为什么需要十二平均律？" class="headerlink" title="3.1 为什么需要十二平均律？"></a>3.1 为什么需要十二平均律？</h3><p>在音乐史的长河中，人类尝试过许多不同的音律系统。古希腊的<strong>五度相生律</strong>、中国先秦的<strong>三分损益法</strong>、中世纪的<strong>纯律</strong>……每种系统都有其独特的美，但也都面临一个致命问题——<strong>无法自由转调</strong>。</p>
+<p>以五度相生律为例：如果从 C 开始，连续向上叠加纯五度（C → G → D → A → E → B → F# → C# → G# → D# → A# → E# → B#），经过12次五度叠加后，最后得到的音比出发点高约 23.5  cents（音分，1 cent &#x3D; 1&#x2F;100 半音）。这个微小的差异叫做<strong>毕达哥拉斯 comma</strong>。</p>
+<p>结果是什么呢？如果你用五度相生律调一架钢琴，从 C 大调弹到 F 大调，听起来还挺和谐；但从 C 大调弹到 Gb 大调，可能就”跑调”了。</p>
+<p><strong>十二平均律（Equal Temperament）</strong> 的天才解决方案是：不再追求每个音程的”绝对纯度”，而是把一个八度<strong>均分为12个完全相等的半音</strong>，每个半音的频率比固定为：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">²√2 = 1.059463094359...</span><br></pre></td></tr></table></figure></div>
+
+<p>这个数看起来有点奇怪，但它的数学特性非常优雅：连续乘以12次²√2，恰好等于 2（即回到八度）：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(¹²√2)¹² = 2</span><br></pre></td></tr></table></figure></div>
+
+<p>这意味着在十二平均律中，<strong>所有12个调完全平等</strong>——无论从哪个音开始建立音阶，结构都完全一样。作曲家可以自由地在任意调之间转调，不需要为每个调单独调音。</p>
+<h3 id="3-2-十二平均律的数学之美"><a href="#3-2-十二平均律的数学之美" class="headerlink" title="3.2 十二平均律的数学之美"></a>3.2 十二平均律的数学之美</h3><p>让我们用 A4 &#x3D; 440 Hz 精确计算相邻半音的频率：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A4 = 440 Hz（标准音，ISO 1988）</span><br><span class="line"></span><br><span class="line">A#4 = 440 × ¹²√2 ≈ 440 × 1.05946 ≈ 466.16 Hz</span><br><span class="line">B4  = 466.16 × ¹²√2 ≈ 493.88 Hz</span><br><span class="line">C5  = 493.88 × ¹²√2 ≈ 523.25 Hz</span><br><span class="line">C#5 = 523.25 × ¹²√2 ≈ 554.37 Hz</span><br><span class="line">... 以此类推</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>音分（Cents）</strong> 是描述微小声高差异的单位：</p>
+<ul>
+<li>1 cent &#x3D; 1&#x2F;100 半音</li>
+<li>100 cents &#x3D; 1 个半音</li>
+<li>1200 cents &#x3D; 1 个八度</li>
+</ul>
+<p>十二平均律中，每个半音 &#x3D; 100 cents，完全均匀。这是<strong>韦克迈斯特八度（Werckmeister temperament）</strong>等早期平均律方案追求的目标，而现代十二平均律完美实现了它。</p>
+<h3 id="3-3-钢琴上的十二平均律"><a href="#3-3-钢琴上的十二平均律" class="headerlink" title="3.3 钢琴上的十二平均律"></a>3.3 钢琴上的十二平均律</h3><p>一架标准88键钢琴，完整覆盖了 A0（27.5 Hz）到 C8（4186 Hz），共88个音，涵盖7个完整的八度加3个白键：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">钢琴键盘音高对照（以C大调为中心）：</span><br><span class="line"></span><br><span class="line">        │ 黑键：  C#  │  D#  │      │  F#  │  G#  │  A#  │</span><br><span class="line">┌───────┼────────────┼──────┼───────┼──────┼──────┼──────┤</span><br><span class="line">│ 白键：│  C   │  D   │  E   │  F   │  G   │  A   │  B   │</span><br><span class="line">└───────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┘</span><br><span class="line">        1      2      3      4      5      6      7</span><br></pre></td></tr></table></figure></div>
+
+<p>每组7个白键 + 5个黑键 &#x3D; 12个音，循环重复。钢琴设计完美对应了十二平均律的12音体系。</p>
+<h3 id="3-4-等音：同一个音，不同的名字"><a href="#3-4-等音：同一个音，不同的名字" class="headerlink" title="3.4 等音：同一个音，不同的名字"></a>3.4 等音：同一个音，不同的名字</h3><p>在十二平均律中，由于半音是均匀划分的，有些音的频率完全相同，但记谱和叫法不同——这叫做<strong>等音（Enharmonic Equivalents）</strong>：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">┌────────────────────────────────────────────────────────────┐</span><br><span class="line">│  C# = Db    │  D# = Eb    │  E = Fb      │  F# = Gb    │</span><br><span class="line">│  G# = Ab    │  A# = Bb    │  B = Cb      │  B# = C     │</span><br><span class="line">└────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<p>虽然频率相同，但等音在<strong>和声语境</strong>中有不同的含义：</p>
+<ul>
+<li><strong>C# 大调</strong>的调号为 7 个升号，色彩偏”明亮&#x2F;古典”</li>
+<li><strong>Db 大调</strong>的调号为 5 个降号，色彩偏”柔和&#x2F;浪漫”</li>
+<li>爵士乐中，Db7 常被记为 <strong>C#7</strong>（习惯用法）</li>
+</ul>
+<h3 id="3-5-十二平均律的代价与收益"><a href="#3-5-十二平均律的代价与收益" class="headerlink" title="3.5 十二平均律的代价与收益"></a>3.5 十二平均律的代价与收益</h3><p><strong>代价</strong>：</p>
+<ul>
+<li>十二平均律中，除了纯八度和纯五度（各偏离约 2 cents），其他所有音程都不”纯”</li>
+<li>大三度比纯律大三度宽约 14 cents，听起来”稍亮”</li>
+<li>纯律中的和声（尤其是大调三和弦）比十二平均律更”温暖”</li>
+<li>一些古典音乐学家认为十二平均律”杀死”了音乐的情感深度</li>
+</ul>
+<p><strong>收益</strong>：</p>
+<ul>
+<li>任意调性间自由转调</li>
+<li>乐器标准化成为可能（钢琴、吉他等）</li>
+<li>作曲家的创作空间极大扩展</li>
+<li>现代流行音乐、爵士、电子音乐得以蓬勃发展</li>
+</ul>
+<blockquote>
+<p><strong>历史事实</strong>：十二平均律在16-17世纪由荷兰数学家西蒙·斯特芬（Simon Stevin）首先从数学上提出，但受限于乐器制造技术未能实现。直到19世纪，随着钢琴制造技术的成熟，十二平均律才成为全球音乐的标准。</p>
+</blockquote>
+<hr>
+<h2 id="第四章-音阶与调式：音乐的色彩语言"><a href="#第四章-音阶与调式：音乐的色彩语言" class="headerlink" title="第四章 音阶与调式：音乐的色彩语言"></a>第四章 音阶与调式：音乐的色彩语言</h2><h3 id="4-1-什么是音阶？"><a href="#4-1-什么是音阶？" class="headerlink" title="4.1 什么是音阶？"></a>4.1 什么是音阶？</h3><p><strong>音阶（Scale）</strong> 是一组按照特定规则排列的音符。简单理解，音阶就是音乐的”词汇表”——从这张词汇表中选择音符，构建旋律与和声。</p>
+<p>音阶有几个关键参数：</p>
+<ul>
+<li><strong>起始音（Root）</strong>：音阶的”家”，通常是大调或小调的主音</li>
+<li><strong>音数（Scale Degrees）</strong>：音阶中每个音的名称（1-7，主音到导音）</li>
+<li><strong>音程结构（Interval Pattern）</strong>：音阶中全音和半音的排列顺序</li>
+</ul>
+<blockquote>
+<p><strong>类比</strong>：如果音乐是语言，音阶就是字母表。和弦是词汇，词汇组成语法（和弦进行），语法组织成句子（旋律与和声）。</p>
+</blockquote>
+<h3 id="4-2-自然大调：最”标准”的颜色"><a href="#4-2-自然大调：最”标准”的颜色" class="headerlink" title="4.2 自然大调：最”标准”的颜色"></a>4.2 自然大调：最”标准”的颜色</h3><p><strong>自然大调（Natural Major Scale）</strong> 是西方流行音乐中最重要的音阶，也是大多数人听到”开心”的音乐时会想到的声音。</p>
+<p><strong>结构公式</strong>：全音 - 全音 - 半音 - 全音 - 全音 - 全音 - 半音</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">C 大调示例：</span><br><span class="line"></span><br><span class="line">  C ──全音── D ──全音── E ──半音── F</span><br><span class="line">  │                        ↑</span><br><span class="line">  │                        第4音（下属音）</span><br><span class="line">  │</span><br><span class="line">  └──向上──┘</span><br><span class="line"></span><br><span class="line">  F ──全音── G ──全音── A ──全音── B ──半音── C</span><br><span class="line">  ↑                                  │</span><br><span class="line">  第4音                              └── 回到主音（八度）</span><br></pre></td></tr></table></figure></div>
+
+<p>C 大调完整音阶：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">音名：  C    D    E    F    G    A    B    C</span><br><span class="line">唱名：  Do   Re   Mi   Fa   Sol  La   Ti   Do</span><br><span class="line">音级：  1    2    3    4    5    6    7    8</span><br><span class="line">关系：  主音 上主音 中音  下属  属音  下中  导音  主音</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>为什么大调听起来”开心”？</strong></p>
+<p>关键在于<strong>三度音（C 到 E）是大三度</strong>（4个半音）。大三度是一个不完全协和音程——它既和谐（因为离纯五度 C-G 不远），又带有明亮的光泽。小调的三度音是小三度，听起来更”暗”，因此产生忧郁感。</p>
+<p><strong>唱名（Solfege）系统</strong>是学习音阶的好工具：</p>
+<ul>
+<li>Do &#x3D; 主音（home）</li>
+<li>Re &#x3D; 上行运动的起点</li>
+<li>Mi &#x3D; “我在哪里”的参照点</li>
+<li>Fa &#x3D; 向属音过渡</li>
+<li>Sol &#x3D; 稳定的归属</li>
+<li>La &#x3D; 情感色彩变化</li>
+<li>Ti &#x3D; “想回家”的冲动（导音）</li>
+</ul>
+<h3 id="4-3-自然小调：忧郁的蓝色"><a href="#4-3-自然小调：忧郁的蓝色" class="headerlink" title="4.3 自然小调：忧郁的蓝色"></a>4.3 自然小调：忧郁的蓝色</h3><p><strong>自然小调（Natural Minor Scale）</strong> 与大调共享相同的升降号，但结构完全不同：</p>
+<p><strong>结构公式</strong>：全音 - 半音 - 全音 - 全音 - 半音 - 全音 - 全音</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">A 自然小调示例：</span><br><span class="line"></span><br><span class="line">  A ──全音── B ──半音── C ──全音── D</span><br><span class="line">  │              ↑</span><br><span class="line">  │              第3音（小调特征）</span><br><span class="line">  │</span><br><span class="line">  └──向上──┘</span><br><span class="line"></span><br><span class="line">  D ──全音── E ──半音── F ──全音── G ──全音── A</span><br><span class="line">  ↑                                  │</span><br><span class="line">  └── 回到主音                       └── 导音</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>大小调对比</strong>：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">┌────────────────────────────────────────────────────────────────┐</span><br><span class="line">│              │  C 大调           │  A 小调（关系小调）          │</span><br><span class="line">├────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  音阶：      │  C D E F G A B C  │  A B C D E F G A           │</span><br><span class="line">│  音程结构：  │  W W H W W W H   │  W H W W H W W             │</span><br><span class="line">│  三度：      │  C-E = 大三度     │  A-C = 小三度              │</span><br><span class="line">│  七度：      │  C-B = 大七度     │  A-G = 小七度              │</span><br><span class="line">│  情感：      │  明亮、愉悦       │  忧郁、深沉、内省          │</span><br><span class="line">│  典型应用：  │  流行、儿歌       │  蓝调、悲歌、暗黑系         │</span><br><span class="line">└────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>关系大小调</strong>：C 大调和 A 小调共享相同的升降号（都没有升降号），互为关系大小调。C 大调的主音 C 向上小三度是 A 小调的主音。</p>
+<h3 id="4-4-和声小调：解决张力的秘密"><a href="#4-4-和声小调：解决张力的秘密" class="headerlink" title="4.4 和声小调：解决张力的秘密"></a>4.4 和声小调：解决张力的秘密</h3><p>自然小调有一个问题：<strong>V 级和弦太小</strong>，缺乏向主和弦解决的强烈冲动。</p>
+<p>以 A 小调为例：</p>
+<ul>
+<li>自然小调的 V 级是 E-G-B（小三和弦）</li>
+<li>主和弦是 A-C-E（小三和弦）</li>
+<li>两个小三和弦之间缺乏”牵引力”</li>
+</ul>
+<p>解决方案：<strong>升高第七音</strong>，得到<strong>和声小调（Harmonic Minor Scale）</strong>：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">A 和声小调：</span><br><span class="line"></span><br><span class="line">  A ──全音── B ──半音── C ──全音── D ──全音── E ──全音── F ──1½全音── G# ──半音── A</span><br><span class="line">         W        H        W        W        W        H+½       H</span><br><span class="line">                              ↑</span><br><span class="line">                        升高的第七音（导音）</span><br></pre></td></tr></table></figure></div>
+
+<p>和声小调的 <strong>G#（导音）</strong> 距离主音 A 只有半音，产生了强烈的”想回家”的倾向。</p>
+<p><strong>副作用</strong>：第六音（F）和导音（G#）之间形成了 <strong>增二度（Augmented Second）</strong>，跨越3个半音。在旋律中使用时，增二度的跳进听起来很不自然。</p>
+<p>解决方案：<strong>旋律小调</strong>。</p>
+<h3 id="4-5-旋律小调：平滑的解决"><a href="#4-5-旋律小调：平滑的解决" class="headerlink" title="4.5 旋律小调：平滑的解决"></a>4.5 旋律小调：平滑的解决</h3><p><strong>旋律小调（Melodic Minor Scale）</strong> 在上行时同时升高第六和第七音，消除增二度：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">A 旋律小调（上行）：</span><br><span class="line"></span><br><span class="line">  A ──全音── B ──半音── C ──全音── D ──全音── E ──全音── F# ──全音── G# ──全音── A</span><br><span class="line">         W        H        W        W        W        W           W</span><br><span class="line">              ↑           ↑</span><br><span class="line">           升6音       升7音</span><br><span class="line"></span><br><span class="line">A 旋律小调（下行，返回自然小调）：</span><br><span class="line"></span><br><span class="line">  A ←──半音── G ←──全音── F ←──全音── E ←──全音── D ←──全音── C ←──全音── B ←──全音── A</span><br><span class="line">            H           W           W           W           W           W</span><br></pre></td></tr></table></figure></div>
+
+<p>在<strong>爵士乐（Jazz）</strong>中，旋律小调被广泛使用，甚至发展为<strong>爵士旋律小调（Jazz Melodic Minor）</strong>——直接以任意音为主音构成旋律小调音阶，形成7种<strong>旋律小调调式</strong>：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">┌────────────────────────────────────────────────────────────────┐</span><br><span class="line">│  调式名称              │  结构（相对于旋律小调主音）            │</span><br><span class="line">├────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  Dorian b2（洛克里亚） │  Hb2 W H W W W W W                  │</span><br><span class="line">│  Lydian #5（利底亚增5）│  W W W H W W W H                    │</span><br><span class="line">│  Lydian b7            │  W W W H W W H W                     │</span><br><span class="line">│  Mixolydian b6        │  W W H W W H W W                     │</span><br><span class="line">│  Locrian 2            │  W H W W W H W W                     │</span><br><span class="line">│  Super Locrian（减）  │  H W W W W W W W                     │</span><br><span class="line">└────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="4-6-五声音阶：最简单的音乐语言"><a href="#4-6-五声音阶：最简单的音乐语言" class="headerlink" title="4.6 五声音阶：最简单的音乐语言"></a>4.6 五声音阶：最简单的音乐语言</h3><p><strong>五声音阶（Pentatonic Scale）</strong> 是世界上使用最广泛的音阶体系。中国传统音乐、美国原住民音乐、凯尔特音乐、苏格兰音乐、非洲音乐……几乎所有古老文明都独立发现了五声音阶。</p>
+<p><strong>大调五声音阶</strong>：删除大调中的第4音和第7音</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">C 大调五声音阶：</span><br><span class="line"></span><br><span class="line">  C - D - E - G - A - C</span><br><span class="line">  1   2   3   5   6   8</span><br><span class="line">        ↑       ↑</span><br><span class="line">      删除     删除</span><br><span class="line">      (F)      (B)</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>小调五声音阶</strong>：删除自然小调中的第2音和第6音</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A 小调五声音阶：</span><br><span class="line"></span><br><span class="line">  A - C - D - E - G - A</span><br><span class="line">  1   3   4   5   7   8</span><br><span class="line">      ↑       ↑</span><br><span class="line">    删除     删除</span><br><span class="line">    (B)      (F)</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>为什么五声音阶如此通用？</strong></p>
+<p>因为它<strong>天然避免了所有半音关系</strong>。在五声音阶中，任意两个音之间的最小音程是<strong>大二度（2个半音）</strong>，不存在小二度、大七度等不协和的尖锐跳进。</p>
+<p>这意味着：<strong>在五声音阶中，任意组合音符几乎都不会难听。</strong></p>
+<p>因此：</p>
+<ul>
+<li>吉他手学五声音阶是最快能上手即兴的方法</li>
+<li>很多歌曲的主旋律只用五声音阶的几个音就能概括</li>
+<li>即兴演奏遇到瓶颈时，回到五声音阶总是安全的</li>
+</ul>
+<h3 id="4-7-七种教会调式：超越大小调的色彩"><a href="#4-7-七种教会调式：超越大小调的色彩" class="headerlink" title="4.7 七种教会调式：超越大小调的色彩"></a>4.7 七种教会调式：超越大小调的色彩</h3><p><strong>教会调式（Church Modes）</strong> 起源于中世纪教堂音乐，后来演化为现代的<strong>7种调式（Modes）</strong>：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│  调式名称          │  起始音（以C为例）│  结构（全音= W，半音= H）  │  特征              │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  Ionian           │  C              │  W W H W W W H            │  等同大调，明亮    │</span><br><span class="line">│  (伊奥尼亚)       │                │                          │                    │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  Dorian           │  D              │  W H W W W H W            │  小调但明亮6th    │</span><br><span class="line">│  (多利亚)         │                │                          │  爵士、Funk、Celtic│</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  Phrygian         │  E              │  H W W W H W W            │  小调+降2nd       │</span><br><span class="line">│  (弗里吉亚)       │                │                          │  西班牙/弗拉明戈  │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  Lydian           │  F              │  W W W H W W H            │  大调+升4th       │</span><br><span class="line">│  (利底亚)         │                │                          │  梦幻、电影配乐   │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  Mixolydian       │  G              │  W W H W W H W            │  大调+降7th       │</span><br><span class="line">│  (混合利底亚)     │                │                          │  蓝调、摇滚、放克  │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  Aeolian          │  A              │  W H W W H W W            │  等同小调，忧郁    │</span><br><span class="line">│  (爱奥尼亚)       │                │                          │                    │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  Locrian          │  B              │  H W W H W W W            │  极度不稳定       │</span><br><span class="line">│  (洛克里亚)       │                │                          │  极少使用，实验音乐│</span><br><span class="line">└──────────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>调式记忆技巧——钢琴白键快速弹奏法</strong>：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">从 C 弹到下一个 C（白键全弹）：</span><br><span class="line">  C - D - E - F - G - A - B - C</span><br><span class="line">  ↓   ↓   ↓   ↓   ↓   ↓   ↓</span><br><span class="line">  1   2   3   4   5   6   7</span><br><span class="line">  大调  多利亚 弗里吉亚 利底亚 混合利底亚 爱奥尼亚 洛克里亚</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>现代流行音乐中的调式应用</strong>：</p>
+<table>
+<thead>
+<tr>
+<th align="center">调式</th>
+<th align="center">典型应用场景</th>
+<th align="center">代表性歌曲元素</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Ionian</td>
+<td align="center">标准流行</td>
+<td align="center">大调和弦进行</td>
+</tr>
+<tr>
+<td align="center">Dorian</td>
+<td align="center">复古灵魂乐</td>
+<td align="center">Bm7 和弦，F#7 蓝调感</td>
+</tr>
+<tr>
+<td align="center">Phrygian</td>
+<td align="center">西班牙&#x2F;拉丁</td>
+<td align="center">降B和弦（对C而言）</td>
+</tr>
+<tr>
+<td align="center">Lydian</td>
+<td align="center">电影配乐</td>
+<td align="center">#4 音带来”漂浮”感</td>
+</tr>
+<tr>
+<td align="center">Mixolydian</td>
+<td align="center">摇滚&#x2F;蓝调</td>
+<td align="center">降7th，布鲁斯味道</td>
+</tr>
+<tr>
+<td align="center">Aeolian</td>
+<td align="center">忧郁&#x2F;暗黑</td>
+<td align="center">标准小调</td>
+</tr>
+</tbody></table>
+<h3 id="4-8-调式互换：现代流行音乐的秘密武器"><a href="#4-8-调式互换：现代流行音乐的秘密武器" class="headerlink" title="4.8 调式互换：现代流行音乐的秘密武器"></a>4.8 调式互换：现代流行音乐的秘密武器</h3><p><strong>调式互换（Modal Interchange）</strong> 是从其他调式借用音或和弦的技法，不转调，但打破常规调内和弦的限制。</p>
+<p><strong>以 C 大调为例，可以借用的和弦</strong>：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">C 大调内和弦：  C   Dm   Em   F   G   Am   Bdim</span><br><span class="line"></span><br><span class="line">借用 C 小调（关系小调）：</span><br><span class="line">  - Ab major (bVII)</span><br><span class="line">  - Bb major (bVI)  </span><br><span class="line">  - Db major (#IV)</span><br><span class="line">  - Eb major (bIII)</span><br><span class="line"></span><br><span class="line">借用 C Phrygian：</span><br><span class="line">  - Db major (bII)</span><br><span class="line">  - Fb major (=E) (bvii)</span><br><span class="line"></span><br><span class="line">借用 C Lydian：</span><br><span class="line">  - D major (#IV)</span><br><span class="line">  - G#dim (vii#iv)</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>经典案例</strong>：披头士《Love Me Do》的和弦进行使用了 <strong>C - G&#x2F;B - Am - G</strong>，其中 G&#x2F;B（以B为低音的G和弦）是借用和弦。</p>
+<p><strong>调式互换的情感效果</strong>：</p>
+<ul>
+<li>bVII（来自平行小调）→ 怀旧、深沉、复古</li>
+<li>bVI → 柔和、浪漫</li>
+<li>#IV → 出其不意、梦幻、超现实</li>
+<li>bII → 中世纪、神秘</li>
+</ul>
+<hr>
+<h2 id="第五章-和弦：音符的化学反应"><a href="#第五章-和弦：音符的化学反应" class="headerlink" title="第五章 和弦：音符的化学反应"></a>第五章 和弦：音符的化学反应</h2><h3 id="5-1-什么是和弦？"><a href="#5-1-什么是和弦？" class="headerlink" title="5.1 什么是和弦？"></a>5.1 什么是和弦？</h3><p><strong>和弦（Chord）</strong> 是三个或更多音同时发声（或以极短间隔连续发声）形成的音组。</p>
+<p>从”点”到”面”的质变：单个音符是一条线，和弦是一个平面。和弦赋予了音乐<strong>和声（Harmony）</strong>——不同音符同时振动时产生的物理和心理反应。</p>
+<p>和声的基本原理是<strong>谐波共振</strong>：当两个音的频率比接近简单整数比时（如 2:1、3:2、4:3），它们听起来和谐；当频率比复杂时（如 17:11），它们听起来不协和。</p>
+<h3 id="5-2-三和弦：四种基本形态"><a href="#5-2-三和弦：四种基本形态" class="headerlink" title="5.2 三和弦：四种基本形态"></a>5.2 三和弦：四种基本形态</h3><p><strong>三和弦（Triad）</strong> 是最小的和弦结构，由三个音构成：<strong>根音（Root）+ 三音（Third）+ 五音（Fifth）</strong></p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│  和弦类型        │  音程结构              │  听感特点    │  C和弦示例    │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  大三和弦        │  根音+大三度+小三度     │  明亮、开放   │  C-E-G       │</span><br><span class="line">│  (Major)        │  = 4半音 + 3半音        │              │              │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  小三和弦        │  根音+小三度+大三度     │  暗淡、柔和   │  C-Eb-G      │</span><br><span class="line">│  (Minor)        │  = 3半音 + 4半音        │              │              │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  增三和弦        │  根音+大三度+大三度     │  扩张、悬疑   │  C-E-G#      │</span><br><span class="line">│  (Augmented)    │  = 4半音 + 4半音        │              │              │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  减三和弦        │  根音+小三度+小三度     │  收缩、紧张   │  C-Eb-Gb     │</span><br><span class="line">│  (Diminished)   │  = 3半音 + 3半音        │              │              │</span><br><span class="line">└──────────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>大三和弦 vs 小三和弦的核心区别</strong>：</p>
+<p>三度音（Third）是决定和弦大小的关键：</p>
+<ul>
+<li><strong>大三度（Major Third）</strong> → 大调色彩，明亮</li>
+<li><strong>小三度（Minor Third）</strong> → 小调色彩，柔和</li>
+</ul>
+<p>五度音（Fifth）决定和弦的”紧张度”：</p>
+<ul>
+<li><strong>纯五度（Perfect Fifth）</strong> → 稳定</li>
+<li><strong>增五度（Augmented Fifth）</strong> → 不稳定，扩张</li>
+<li><strong>减五度（Diminished Fifth）</strong> → 不稳定，收缩</li>
+</ul>
+<h3 id="5-3-七和弦：现代音乐的主角"><a href="#5-3-七和弦：现代音乐的主角" class="headerlink" title="5.3 七和弦：现代音乐的主角"></a>5.3 七和弦：现代音乐的主角</h3><p>在七和弦（Seventh Chords）中，三和弦的基础上再叠加一个<strong>七度音</strong>，形成四音和弦：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│  七和弦类型        │  结构（根音为C）          │  听感特点              │  典型应用   │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  大七和弦          │  C-E-G-B                 │  梦幻、爵士、氛围       │  Smooth Jazz │</span><br><span class="line">│  (maj7 / Cmaj7)   │  大三和弦 + 大七度        │                        │             │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  属七和弦          │  C-E-G-Bb                │  蓝调、放克、爵士       │  Blues, Funk │</span><br><span class="line">│  (C7)             │  大三和弦 + 小七度        │                        │             │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  小七和弦          │  C-Eb-G-Bb               │  温暖、爵士、灵魂       │  Soul, R&amp;B  │</span><br><span class="line">│  (min7 / Cm7)    │  小三和弦 + 小七度         │                        │             │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  半减七和弦        │  C-Eb-Gb-B               │  紧张、悬疑、爵士       │  Jazz Ballad│</span><br><span class="line">│  (half-dim / Cø7)│  减三和弦 + 大七度         │                        │             │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  减七和弦          │  C-Eb-Gb-Bbb(=A)         │  极度紧张、古典         │  Jazz Noir  │</span><br><span class="line">│  (dim7 / Cdim7)  │  减三和弦 + 小七度         │                        │             │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  小大七和弦        │  C-Eb-G-B                │  异域、民族、神秘       │  Indie Folk │</span><br><span class="line">│  (mMaj7 / CmΔ7)  │  小三和弦 + 大七度         │                        │             │</span><br><span class="line">└──────────────────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>属七和弦的特别之处</strong>：</p>
+<p>属七和弦（C7）含有<strong>三全音（Tritone）</strong>：E 和 Bb 之间的距离是6个半音（三全音），是音程协和度的分水岭。</p>
+<p>三全音的特点是<strong>极度不稳定</strong>，它把和弦”钉”在张力状态，等待解决——这正是属七和弦制造”期待感”的核心机制。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">属七和弦的三全音：</span><br><span class="line"></span><br><span class="line">  C7 = C - E - G - Bb</span><br><span class="line">           ↑</span><br><span class="line">        三全音 (E-Bb)</span><br><span class="line">           ↑</span><br><span class="line">        不稳定，需要&quot;回家&quot;到 C</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="5-4-延伸和弦：超越七度"><a href="#5-4-延伸和弦：超越七度" class="headerlink" title="5.4 延伸和弦：超越七度"></a>5.4 延伸和弦：超越七度</h3><p>在爵士和现代流行音乐中，可以在七和弦基础上继续叠加<strong>延伸音（Extensions）</strong>：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">延伸音的叠加顺序：</span><br><span class="line"></span><br><span class="line">根音 → 3音 → 5音 → 7音 → 9音 → 11音 → 13音</span><br><span class="line">  ↓     ↓     ↓     ↓     ↓     ↓     ↓</span><br><span class="line">  1     3     5     7     9    11    13</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>常见延伸和弦类型</strong>：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">┌────────────────────────────────────────────────────────────────┐</span><br><span class="line">│  和弦类型          │  构成音（以C为例）        │  使用场景    │</span><br><span class="line">├────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  Add9 (Cadd9)      │  C-D-G                    │  流行、民谣  │</span><br><span class="line">│  大九和弦 (Cmaj9) │  C-E-G-B-D                 │  Smooth Jazz │</span><br><span class="line">│  属九和弦 (C9)     │  C-E-G-Bb-D               │  Funk、Blues │</span><br><span class="line">│  小九和弦 (Cm9)    │  C-Eb-G-Bb-D               │  Soul、Jazz  │</span><br><span class="line">│  十一和弦 (C11)    │  C-E-G-Bb-D-F              │  爵士、R&amp;B  │</span><br><span class="line">│  属十三和弦 (C13) │  C-E-G-Bb-D-A               │  爵士 Fusion │</span><br><span class="line">└────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>延伸音使用原则</strong>：</p>
+<ul>
+<li>延伸音越多，和弦越”浓稠”——适合背景铺底，不适合主旋律</li>
+<li>旋律音优先：当前旋律正在弹奏的音应该作为和弦的一部分</li>
+<li>声部平衡：不要让低音区太拥挤，延伸音更多放在中高音区</li>
+<li>less is more：在简单的三和弦上稍加延伸，比复杂和弦更有效</li>
+</ul>
+<h3 id="5-5-挂留和弦：悬而未决的张力"><a href="#5-5-挂留和弦：悬而未决的张力" class="headerlink" title="5.5 挂留和弦：悬而未决的张力"></a>5.5 挂留和弦：悬而未决的张力</h3><p><strong>挂留和弦（Suspended Chord）</strong> 用二度音或四度音替代三度音，暂时”挂住”不解决：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">┌────────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│  和弦类型          │  音程结构              │  听感特点              │</span><br><span class="line">├────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  挂二和弦 (sus2)  │  根音 + 大二度 + 纯五度  │  开放、空灵、悬浮      │</span><br><span class="line">│  C - D - G        │  = 2半音 + 7半音        │                        │</span><br><span class="line">├────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  挂四和弦 (sus4)  │  根音 + 纯四度 + 纯五度  │  悬疑、期待、等待解决  │</span><br><span class="line">│  C - F - G        │  = 5半音 + 7半音        │                        │</span><br><span class="line">└────────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>经典用法</strong>：sus4 → 原位三和弦的”推-拉”解决</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">| C - F - G - C |  →  | Csus4 - F - G - C |</span><br><span class="line">                        ↑</span><br><span class="line">                    先推高再落下</span><br></pre></td></tr></table></figure></div>
+
+<p>这个手法在流行音乐前奏、副歌过渡、桥段中极为常见。它的魔力在于：<strong>在到达目的地之前先制造了一个”岔路口”，然后才正式转弯。</strong></p>
+<h3 id="5-6-和弦转位与-slash-chords"><a href="#5-6-和弦转位与-slash-chords" class="headerlink" title="5.6 和弦转位与 slash chords"></a>5.6 和弦转位与 slash chords</h3><p><strong>转位（Inversion）</strong> 是把非根音放在低音：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C 大三和弦的三种位置：</span><br><span class="line"></span><br><span class="line">原位（Root Position）：     C - E - G      （根音在低音）</span><br><span class="line">第一转位（1st Inv）：       E - G - C      （三音在低音）</span><br><span class="line">第二转位（2nd Inv）：       G - C - E      （五音在低音）</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>低音进行（Voice Leading）优化示例</strong>：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">不良声部进行：</span><br><span class="line">  C ──→ Am    （C到A跳了9度）</span><br><span class="line">  E ──→ E     （E保持不动）</span><br><span class="line">  G ──→ C     （G到C跳了4度）</span><br><span class="line">  </span><br><span class="line">优化后：</span><br><span class="line">  C ──→ C     （C保持不动）</span><br><span class="line">  E ──→ E     （E保持不动）</span><br><span class="line">  G ──→ A     （G到A只走了2度）</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>斜杠和弦（Slash Chords）</strong> 表示低音音与和弦音的叠加：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">C/E = 以 E 为低音的大三和弦（&quot;C over E&quot;）</span><br><span class="line">Am7/G = 以 G 为低音的小七和弦</span><br><span class="line">D/F# = 以 F# 为低音的大三和弦</span><br><span class="line"></span><br><span class="line">低音线条进行示例：</span><br><span class="line">| C | G/B | Am7 | E/G# |</span><br><span class="line">根音：C  低音：C-B-A-G  （下四度进行）</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>低音线条（Bass Line）</strong> 是让和弦进行更连贯、更流畅的关键技术。</p>
+<hr>
+<h2 id="第六章-和弦进行：流行音乐的基因密码"><a href="#第六章-和弦进行：流行音乐的基因密码" class="headerlink" title="第六章 和弦进行：流行音乐的基因密码"></a>第六章 和弦进行：流行音乐的基因密码</h2><h3 id="6-1-什么是和弦进行？"><a href="#6-1-什么是和弦进行？" class="headerlink" title="6.1 什么是和弦进行？"></a>6.1 什么是和弦进行？</h3><p>如果说<strong>音阶</strong>是音乐的”词汇表”，<strong>和弦</strong>是”词汇”，那么<strong>和弦进行（Chord Progression）</strong>就是”语法”——它决定了音乐的情感走向、乐句的结构、音乐的叙事逻辑。</p>
+<p>不同的和弦进行像不同的”句式”：有的像陈述句一样稳定，有的像疑问句一样悬疑，有的像感叹句一样戏剧化。</p>
+<h3 id="6-2-功能理论：和声的化学周期表"><a href="#6-2-功能理论：和声的化学周期表" class="headerlink" title="6.2 功能理论：和声的化学周期表"></a>6.2 功能理论：和声的化学周期表</h3><p>西方和声理论把调内和弦分为三大<strong>功能（Function）</strong>家族：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│  功能          │  角色            │  心理作用              │  C大调代表    │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  主功能 (T)   │  稳定、归属       │  &quot;到家了&quot;的感觉        │  C, Am, Em   │</span><br><span class="line">│  (Tonic)     │                  │                        │              │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  下属功能 (S) │  过渡、准备       │  &quot;要去某处&quot;的期待       │  F, Dm       │</span><br><span class="line">│  (Subdominant)│                  │                        │              │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  属功能 (D)   │  倾向、期待       │  &quot;想回家&quot;的冲动        │  G, Bdim     │</span><br><span class="line">│  (Dominant)  │                  │                        │              │</span><br><span class="line">└──────────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>为什么属和弦”想回家”？</strong></p>
+<p>以 G7 → C 为例：</p>
+<ul>
+<li>G7 &#x3D; G-B-D-F，含有<strong>三全音（B-F）</strong></li>
+<li>三全音极度不稳定，两个音都”想移动”：<ul>
+<li>B 想下行到 C（半音）</li>
+<li>F 想上行到 E（半音）</li>
+</ul>
+</li>
+<li>结果：G7 “解决” 到 C（主和弦），三全音消失，和谐回归</li>
+</ul>
+<blockquote>
+<p><strong>经典口诀</strong>：”属和弦就像一块磁铁，永远想把主音吸过来。”</p>
+</blockquote>
+<h3 id="6-3-万能和弦进行：I-V-vi-IV"><a href="#6-3-万能和弦进行：I-V-vi-IV" class="headerlink" title="6.3 万能和弦进行：I-V-vi-IV"></a>6.3 万能和弦进行：I-V-vi-IV</h3><p>如果要选一个”最流行”的和弦进行，历史和现代流行音乐给出了同一个答案：<strong>I - V - vi - IV</strong>。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">以 C 大调为例：</span><br><span class="line"></span><br><span class="line">  C - G - Am - F</span><br><span class="line">  I   V   vi  IV</span><br><span class="line"></span><br><span class="line">以 G 大调为例：</span><br><span class="line"></span><br><span class="line">  G - D - Em - C</span><br><span class="line">  I   V   vi  IV</span><br><span class="line"></span><br><span class="line">以 A 大调为例：</span><br><span class="line"></span><br><span class="line">  A - E - F#m - D</span><br><span class="line">  I   V   vi  IV</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>使用 I-V-vi-IV 的经典歌曲</strong>（据估计超过1000首）：</p>
+<table>
+<thead>
+<tr>
+<th align="center">歌曲</th>
+<th align="center">艺术家</th>
+<th align="center">年份</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Let It Be</td>
+<td align="center">The Beatles</td>
+<td align="center">1970</td>
+</tr>
+<tr>
+<td align="center">No Woman No Cry</td>
+<td align="center">Bob Marley</td>
+<td align="center">1974</td>
+</tr>
+<tr>
+<td align="center">With or Without You</td>
+<td align="center">U2</td>
+<td align="center">1987</td>
+</tr>
+<tr>
+<td align="center">Zombie</td>
+<td align="center">The Cranberries</td>
+<td align="center">1994</td>
+</tr>
+<tr>
+<td align="center">Africa</td>
+<td align="center">Toto</td>
+<td align="center">1978</td>
+</tr>
+<tr>
+<td align="center">Sweet Child O’ Mine</td>
+<td align="center">Guns N’ Roses</td>
+<td align="center">1987</td>
+</tr>
+<tr>
+<td align="center">Someone Like You</td>
+<td align="center">Adele</td>
+<td align="center">2011</td>
+</tr>
+<tr>
+<td align="center">Counting Stars</td>
+<td align="center">OneRepublic</td>
+<td align="center">2013</td>
+</tr>
+</tbody></table>
+<p><strong>为什么它如此成功？</strong></p>
+<p>I → V 制造张力（属和弦的引力）<br>vi 提供”假出口”（意外但不唐突）<br>IV 柔和过渡<br>I 最终回归</p>
+<p>这是一个完整的**”稳定 → 紧张 → 意外 → 回归”**的情感弧线，完美匹配人类最基本的音乐审美心理。</p>
+<h3 id="6-4-其他经典和弦进行"><a href="#6-4-其他经典和弦进行" class="headerlink" title="6.4 其他经典和弦进行"></a>6.4 其他经典和弦进行</h3><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│  和弦进行名称          │  公式（C大调）        │  情感特征    │  代表歌曲         │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  I-V-vi-IV            │  C-G-Am-F             │  通用、流行   │  Let It Be      │</span><br><span class="line">│  I-IV-vi-V            │  C-F-Am-G             │  推进感       │ 52 Ways...      │</span><br><span class="line">│  vi-IV-I-V            │  Am-F-C-G             │  反向、慢歌   │ 未使用（少见）   │</span><br><span class="line">│  I-vi-IV-V            │  C-Am-F-G             │  复古、经典   │ Stand By Me     │</span><br><span class="line">│  ii-V-I               │  Dm-G-C               │  爵士终点     │ Autumn Leaves   │</span><br><span class="line">│  I-V-vi-iii-IV       │  C-G-Am-Em-F          │  戏剧性       │ House of Gold   │</span><br><span class="line">│  I-IV-vi-V            │  C-F-Am-G             │  稳定进行     │ 反向I-V-vi-IV   │</span><br><span class="line">│  I-vi-ii-V           │  C-Am-Dm-G            │  复古流行     │ 偏偏喜欢你      │</span><br><span class="line">│  I-V-IV               │  C-G-F                │  简洁、蓝调   │ Louie Louie     │</span><br><span class="line">│  vi-IV-V-I            │  Am-F-G-C             │  史诗感       │ Here Comes...   │</span><br><span class="line">└──────────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>反向进行（Reversed Progression）</strong>：vi-IV-I-V 是 I-V-vi-IV 的变体，情感方向相反——从小调色彩的”内省”开始，逐步走向大调的”开放”。很多抒情ballad使用这种结构。</p>
+<h3 id="6-5-终止式：乐句的标点符号"><a href="#6-5-终止式：乐句的标点符号" class="headerlink" title="6.5 终止式：乐句的标点符号"></a>6.5 终止式：乐句的标点符号</h3><p><strong>终止式（Cadence）</strong> 是和弦进行的”标点符号”，决定乐句如何收尾：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│  终止式名称        │  和弦进行        │  听感效果      │  比喻            │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  正格终止          │  V → I          │  完全稳定       │  句号「。」      │</span><br><span class="line">│  (Authentic)      │                  │  最&quot;正确&quot;的结束 │                 │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  假正格终止        │  V7 → I          │  极度稳定       │  感叹号「！」    │</span><br><span class="line">│  (Perfect)       │                  │  爵士/古典标配   │                 │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  变格终止          │  IV → I          │  柔和、自然     │  省略号「…」    │</span><br><span class="line">│  (Plagal)        │                  │  &quot;Amen&quot;终止     │                 │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  半终止            │  任意 → V        │  未完成、悬疑   │  逗号「，」      │</span><br><span class="line">│  (Half)           │                  │  乐句未结束     │                 │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  假终止            │  V → vi          │  意外转弯       │  破折号「—」     │</span><br><span class="line">│  (Deceptive)      │                  │  &quot;以为结束了&quot;   │                 │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  那不勒斯终止       │  bII → I         │  戏剧性、电影感 │  电影配乐常用    │</span><br><span class="line">│  (Neapolitan)     │                  │  极度不协和后解决│                 │</span><br><span class="line">└──────────────────────────────────────────────────────────────────────────┤</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>假正格终止（V7 → I）</strong> 是最强烈的结束感：属七和弦的三全音引力 + 大三和弦的完全稳定 &#x3D; 极致满足感。</p>
+<p>爵士乐几乎所有”终点”都用 V7 → I（或其转位），没有它，爵士乐句就”站不住脚”。</p>
+<h3 id="6-6-转调与调式互换"><a href="#6-6-转调与调式互换" class="headerlink" title="6.6 转调与调式互换"></a>6.6 转调与调式互换</h3><p><strong>转调（Modulation）</strong> 是从一个调移动到另一个调，增加音乐的结构感和戏剧性：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">常见转调路线：</span><br><span class="line"></span><br><span class="line">上行五度转调：</span><br><span class="line">  C → G → D → A → E → B → F# → C#</span><br><span class="line"></span><br><span class="line">下行五度转调：</span><br><span class="line">  C → F → Bb → Eb → Ab → Db → Gb → Cb</span><br><span class="line"></span><br><span class="line">&quot;大调走向&quot;转调（常用）：</span><br><span class="line">  C → G/B → Em → C → G → C  （G/B 是 G 大调的主和弦，同时也是 C 大调的 V/vi）</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>调式互换（Modal Interchange）</strong> 不改变主调，但借用其他调式的和弦：</p>
+<p>C 大调中常用的借用和弦：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">借用平行小调（A小调）：</span><br><span class="line">  Ab major → bVII  （&quot;借用七级&quot;）</span><br><span class="line">  Db major → #IV   （&quot;升四级&quot;）</span><br><span class="line">  Bb major → bVI   （&quot;降六级&quot;）</span><br><span class="line"></span><br><span class="line">经典案例：Hey Jude（The Beatles）</span><br><span class="line">  C  F  C  G  F  C  G  C</span><br><span class="line">       ↑</span><br><span class="line">    bVII和弦（C大调中本不存在）</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="6-7-Jazz-ii-V-I：爵士乐的核心语法"><a href="#6-7-Jazz-ii-V-I：爵士乐的核心语法" class="headerlink" title="6.7 Jazz ii-V-I：爵士乐的核心语法"></a>6.7 Jazz ii-V-I：爵士乐的核心语法</h3><p><strong>ii-V-I</strong> 是爵士乐中最重要的和弦进行，可以称为爵士乐的”主谓宾”结构：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">D小调 → G属七 → C大调</span><br><span class="line">Dm7    →  G7   →  Cmaj7</span><br><span class="line"></span><br><span class="line">声部分析（最优 voice leading）：</span><br><span class="line">  Dm7：  D - F - A - C</span><br><span class="line">  G7：   G - B - D - F    （每个声部平滑进行）</span><br><span class="line">  Cmaj7：C - E - G - B</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>扩展与替代</strong>：</p>
+<ul>
+<li>ii7 可以扩展为 ii7b9（加入b9音，更爵士）</li>
+<li>V7 可以用 <strong>Tritone Substitution（隔四度替换）</strong> 变为 Db7</li>
+<li>I 可以扩展为 Imaj9、Imaj7#11 等</li>
+</ul>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ii-V-I 的 Tritone Substitution 版本：</span><br><span class="line">  Dm7  G7  Cmaj7</span><br><span class="line">  ↓    ↓    ↓</span><br><span class="line">  Dm7  Db7  Cmaj7</span><br><span class="line">       ↑</span><br><span class="line">    向上纯五度 = 向下纯四度</span><br><span class="line">    G7 (G-B-D-F) → Db7 (Db-F-Ab-C)</span><br><span class="line">    核心：三全音（G-B）保持位置不变</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h2 id="第七章-节奏与节拍：音乐的骨架"><a href="#第七章-节奏与节拍：音乐的骨架" class="headerlink" title="第七章 节奏与节拍：音乐的骨架"></a>第七章 节奏与节拍：音乐的骨架</h2><h3 id="7-1-拍子与节拍的基本概念"><a href="#7-1-拍子与节拍的基本概念" class="headerlink" title="7.1 拍子与节拍的基本概念"></a>7.1 拍子与节拍的基本概念</h3><p>如果说旋律是音乐的”血肉”，和声是”皮肤”，那么<strong>节奏（Rhythm）</strong> 就是”骨架”——没有骨架，音乐就是一团松散的音符。</p>
+<p><strong>拍子（Beat）</strong> 是音乐的”脉搏”，规律性的强弱循环。<strong>节拍（Meter）</strong> 是拍子的组织方式。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">4/4 拍是最常见的节拍：</span><br><span class="line"></span><br><span class="line">┌────────────────────────────────────┐</span><br><span class="line">│  拍号含义：4/4                      │</span><br><span class="line">│  - 分子 4：每小节 4 拍              │</span><br><span class="line">│  - 分母 4：每拍 = 四分音符          │</span><br><span class="line">├────────────────────────────────────┤</span><br><span class="line">│  强弱规律：  强  弱  次强  弱        │</span><br><span class="line">│  计数：     1   2    3    4         │</span><br><span class="line">│  常见译名：咚  喳  咚  喳            │</span><br><span class="line">└────────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="7-2-常用节拍类型"><a href="#7-2-常用节拍类型" class="headerlink" title="7.2 常用节拍类型"></a>7.2 常用节拍类型</h3><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│  拍号          │  含义                │  典型应用          │  风格特征      │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  4/4           │  每小节4个四分音符    │  流行、摇滚、R&amp;B   │  稳定、平衡    │</span><br><span class="line">│  3/4           │  每小节3个四分音符    │  圆舞曲、华尔兹    │  旋转感        │</span><br><span class="line">│  6/8           │  每小节6个八分音符    │  民谣、抒情曲      │  柔和、摇摆    │</span><br><span class="line">│  2/4           │  每小节2个四分音符    │  进行曲            │  坚定、有力    │</span><br><span class="line">│  12/8          │  每小节12个八分音符   │  灵魂乐、抒情曲    │  浓郁、流畅    │</span><br><span class="line">│  5/4           │  每小节5个四分音符    │  复杂、实验        │  不稳定、意外  │</span><br><span class="line">│  7/8           │  每小节7个八分音符    │  巴尔干音乐        │  舞曲、旋转    │</span><br><span class="line">│  9/8           │  每小节9个八分音符    │  古典、New Age    │  梦幻、漂浮    │</span><br><span class="line">└──────────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="7-3-切分节奏：打破重音的艺术"><a href="#7-3-切分节奏：打破重音的艺术" class="headerlink" title="7.3 切分节奏：打破重音的艺术"></a>7.3 切分节奏：打破重音的艺术</h3><p><strong>切分节奏（Syncopation）</strong> 是把重音从强拍移到弱拍，打破常规的强弱规律：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">普通节奏（重音在1、3拍）：</span><br><span class="line"></span><br><span class="line">  ●    ●    ●    ●</span><br><span class="line">  强   弱   次强  弱</span><br><span class="line">  1    2    3    4</span><br><span class="line"></span><br><span class="line">切分节奏（重音移位）：</span><br><span class="line"></span><br><span class="line">     ●      ●      ●</span><br><span class="line">  1     2    3     4</span><br><span class="line">      ↑</span><br><span class="line">   重音在2和4（&quot;反拍&quot;）</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>2和4拍的切分节奏</strong>是很多现代音乐风格的核心：</p>
+<ul>
+<li><strong>Funk</strong>：几乎所有重音都在反拍（2、4拍）</li>
+<li><strong>Disco &#x2F; Dance</strong>：4&#x2F;4拍下的16分音符切分</li>
+<li><strong>Reggae</strong>：1拍留空，3拍重音（反置）</li>
+</ul>
+<h3 id="7-4-复节奏与复合节拍"><a href="#7-4-复节奏与复合节拍" class="headerlink" title="7.4 复节奏与复合节拍"></a>7.4 复节奏与复合节拍</h3><p><strong>复节奏（Polyrhythm）</strong> 是同时使用两个或多个不同节奏型：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">3 对 2（最常见的复节奏）：</span><br><span class="line"></span><br><span class="line">  3：  ●  ●  ●  ●  ●  ●</span><br><span class="line">  2：  ●    ●    ●    ●</span><br><span class="line">  合： ●  ●  ●    ●  ●  ●</span><br><span class="line">            ↑</span><br><span class="line">        交叉点产生复杂的律动感</span><br></pre></td></tr></table></figure></div>
+
+<p>复节奏广泛存在于：</p>
+<ul>
+<li>西非和加勒比音乐（非洲根源）</li>
+<li>巴西音乐（Samba、Bossa Nova）</li>
+<li>爵士乐（特别是拉丁爵士）</li>
+<li>现代电子音乐</li>
+</ul>
+<h3 id="7-5-时值与音符长度"><a href="#7-5-时值与音符长度" class="headerlink" title="7.5 时值与音符长度"></a>7.5 时值与音符长度</h3><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│  音符名称    │  时值（相对于全音符）│  常见时值（120 BPM）│  用途          │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  全音符      │  1                  │  2秒               │  长音、延续     │</span><br><span class="line">│  二分音符    │  1/2                │  1秒               │  中等长度       │</span><br><span class="line">│  四分音符    │  1/4                │  0.5秒             │  基础节拍单位   │</span><br><span class="line">│  八分音符    │  1/8                │  0.25秒            │  快速跑动       │</span><br><span class="line">│  十六分音符   │  1/16               │  0.125秒           │  密集节奏       │</span><br><span class="line">│  三十二分音符 │  1/32               │  0.0625秒          │  极高密度       │</span><br><span class="line">└──────────────────────────────────────────────────────────────────────────┘</span><br><span class="line"></span><br><span class="line">附点和三连音：</span><br><span class="line"></span><br><span class="line">  附点四分音符：四分音符 + 八分音符 = 1.5拍</span><br><span class="line">  三连音：      把一拍均分为3份（而非正常的2份）</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="7-6-律动（Groove）：节奏的灵魂"><a href="#7-6-律动（Groove）：节奏的灵魂" class="headerlink" title="7.6 律动（Groove）：节奏的灵魂"></a>7.6 律动（Groove）：节奏的灵魂</h3><p><strong>律动（Groove）</strong> 是节奏在时间中的”感觉”——同样的节拍，不同的律动能带来完全不同的情绪。</p>
+<p>影响律动的因素：</p>
+<ul>
+<li><strong>音符的精确度</strong>：精确量化 vs 稍微延迟（laid back）或提前（pushed）</li>
+<li><strong>重音的位置</strong>：自然重音 vs 切分重音</li>
+<li><strong>音符的疏密</strong>：均匀分布 vs 密集-留白交替</li>
+<li><strong>动态变化</strong>：每个音的强弱差异</li>
+</ul>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">laid back vs pushed：</span><br><span class="line"></span><br><span class="line">laid back（往后靠）：音符稍微晚于节拍点 → 慵懒、放松</span><br><span class="line">pushed（往前推）：音符稍微早于节拍点 → 紧迫、激进</span><br><span class="line">exactly on time：音符精确在节拍点 → 精准、机械</span><br></pre></td></tr></table></figure></div>
+
+<p>好的律动让音乐”呼吸”，而不是机械地踩节拍器。</p>
+<hr>
+<h2 id="第八章-现代音乐的特殊语言"><a href="#第八章-现代音乐的特殊语言" class="headerlink" title="第八章 现代音乐的特殊语言"></a>第八章 现代音乐的特殊语言</h2><h3 id="8-1-布鲁斯音阶：爵士与摇滚的灵魂"><a href="#8-1-布鲁斯音阶：爵士与摇滚的灵魂" class="headerlink" title="8.1 布鲁斯音阶：爵士与摇滚的灵魂"></a>8.1 布鲁斯音阶：爵士与摇滚的灵魂</h3><p><strong>布鲁斯音阶（Blues Scale）</strong> 是非洲裔美国音乐的核心语言，融合了欧洲大调音阶和非洲音乐特有的”蓝调音”：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">小调五声音阶：  A - C - D - E - G - A</span><br><span class="line">蓝调音阶：      A - C - D - Eb - E - G - A</span><br><span class="line">                ↑           ↑</span><br><span class="line">            Blue Note    Blue Note</span><br></pre></td></tr></table></figure></div>
+
+<p>两个 <strong>蓝调音（Blue Notes）</strong>：</p>
+<ul>
+<li><strong>降五度（b5）</strong>：C 和 Eb 之间的音，跨越3个半音（增二度）</li>
+<li><strong>降七度（bb7）</strong>：G 和 A 之间的音，实际上等于 <strong>大七度的小三度版本</strong></li>
+</ul>
+<p>蓝调音在古典乐理中属于”不协和”音，但布鲁斯音乐刻意使用它们——这种<strong>以不协和创造美</strong>的思想深刻影响了爵士乐。</p>
+<h3 id="8-2-爵士和弦标记系统"><a href="#8-2-爵士和弦标记系统" class="headerlink" title="8.2 爵士和弦标记系统"></a>8.2 爵士和弦标记系统</h3><p>爵士乐使用一种国际通用的简洁和弦标记：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│  标记          │  含义                          │  示例                  │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  C             │  C 大三和弦                    │  C-E-G                 │</span><br><span class="line">│  Cm / C-      │  C 小三和弦                    │  C-Eb-G                │</span><br><span class="line">│  C△7 / Cmaj7  │  C 大七和弦                    │  C-E-G-B               │</span><br><span class="line">│  C-7 / Cm7    │  C 小七和弦                    │  C-Eb-G-Bb              │</span><br><span class="line">│  C7            │  C 属七和弦                    │  C-E-G-Bb               │</span><br><span class="line">│  Cø / Cm7b5   │  C 半减七和弦                  │  C-Eb-Gb-B               │</span><br><span class="line">│  Co / Cdim7   │  C 减七和弦                    │  C-Eb-Gb-Bbb(=A)        │</span><br><span class="line">│  Csus2        │  C 挂二和弦                    │  C-D-G                  │</span><br><span class="line">│  Csus4        │  C 挂四和弦                    │  C-F-G                  │</span><br><span class="line">│  Cadd9        │  C 加大九和弦（不加七度）      │  C-E-G-D                │</span><br><span class="line">│  C6            │  C 大六和弦                    │  C-E-G-A                │</span><br><span class="line">│  Cm6           │  C 小六和弦                    │  C-Eb-G-A               │</span><br><span class="line">│  C/E           │  C 和弦，低音 E                │                        │</span><br><span class="line">│  C9            │  C 属九和弦                    │  C-E-G-Bb-D             │</span><br><span class="line">│  C13           │  C 属十三和弦                  │  C-E-G-Bb-A             │</span><br><span class="line">│  C#11          │  C 加升十一声                  │  C-E-G-F#               │</span><br><span class="line">└──────────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="8-3-降二代五（Tritone-Substitution）"><a href="#8-3-降二代五（Tritone-Substitution）" class="headerlink" title="8.3 降二代五（Tritone Substitution）"></a>8.3 降二代五（Tritone Substitution）</h3><p><strong>降二代五（Tritone Substitution &#x2F; Substitution Dominant）</strong> 是爵士乐中最重要的和弦替代技法：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">原位：  G7  →  C</span><br><span class="line">       G-B-D-F</span><br><span class="line"></span><br><span class="line">替代：  Db7 →  C</span><br><span class="line">       Db-F-Ab-C</span><br><span class="line"></span><br><span class="line">关系：  G 和 Db 相距三全音</span><br><span class="line">       核心音程（B-F 和 Ab-Db）保持不变！</span><br></pre></td></tr></table></figure></div>
+
+<p>降二代五的原理：</p>
+<ul>
+<li>G7 的核心是三全音 B-F（不稳定）</li>
+<li>Db7 的核心是三全音 Ab-Db（也是不稳定）</li>
+<li>两者都”想回家”到 C</li>
+<li>因此 Db7 可以替代 G7</li>
+</ul>
+<p><strong>经典应用</strong>：Coltrane Changes（约翰·柯特兰和弦进行）</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">标准 ii-V-I：</span><br><span class="line">  Dm7 - G7 - Cmaj7</span><br><span class="line"></span><br><span class="line">Coltrane Changes（双 ii-V-I）：</span><br><span class="line">  Dm7 - G7 - Cmaj7</span><br><span class="line">        ↓</span><br><span class="line">  Dm7 - G7 - Abmaj7 - Db7 - Cmaj7</span><br><span class="line">              ↑</span><br><span class="line">         额外插入的 ii-V-I（降二代五）</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="8-4-音阶选择与即兴"><a href="#8-4-音阶选择与即兴" class="headerlink" title="8.4 音阶选择与即兴"></a>8.4 音阶选择与即兴</h3><p>在即兴演奏中，音阶选择是核心技能：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│  当前和弦          │  推荐即兴音阶                            │  效果      │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  Cmaj7             │  C 大调音阶 / C Ionian                  │  平稳、开放│</span><br><span class="line">│  Cm7               │  C 多利亚调式 / C Dorian                │  爵士、小调│</span><br><span class="line">│  C7                │  C 混合利底亚 / C Mixolydian            │  蓝调、放克│</span><br><span class="line">│  C-7b5             │  C 洛克里亚 / C Locrian                 │  极度紧张  │</span><br><span class="line">│  C7#9              │  C 布鲁斯音阶 + 大调音阶                │  粗犷、摇滚│</span><br><span class="line">│  变化和弦           │  全音半音交替音阶 / WH Diminished       │  悬疑、紧张│</span><br><span class="line">│  Caug              │  C 利底亚升五 / C Lydian #5             │  梦幻、超现实│</span><br><span class="line">│  Cdim              │  C 减音阶 / C Diminished                │  戏剧性    │</span><br><span class="line">└──────────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="8-5-声部进行（Voice-Leading）"><a href="#8-5-声部进行（Voice-Leading）" class="headerlink" title="8.5 声部进行（Voice Leading）"></a>8.5 声部进行（Voice Leading）</h3><p><strong>声部进行（Voice Leading）</strong> 是让和弦之间的每个声部尽量平滑移动的技术：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">不良 voice leading：</span><br><span class="line"></span><br><span class="line">  Cmaj7 → Am7</span><br><span class="line">  C-E-G-B → A-C-E-G</span><br><span class="line">  ↑</span><br><span class="line">  C到A跳了9度（大跳，容易&quot;断层&quot;）</span><br><span class="line"></span><br><span class="line">优化后：</span><br><span class="line"></span><br><span class="line">  Cmaj7 → Am7</span><br><span class="line">  C-E-G-B → C-E-G-A</span><br><span class="line">  ↑</span><br><span class="line">  C保持不动，其他声部小步进行</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>声部进行的三大原则</strong>：</p>
+<ol>
+<li><strong>共同音保持（Common Tone）</strong>：同音尽量保留</li>
+<li><strong>最小移动</strong>：各声部尽量半音或全音移动</li>
+<li><strong>反向进行</strong>：当低音上行时，其他声部尽量下行；反之亦然</li>
+</ol>
+<hr>
+<h2 id="第九章-经典歌曲乐理解析"><a href="#第九章-经典歌曲乐理解析" class="headerlink" title="第九章 经典歌曲乐理解析"></a>第九章 经典歌曲乐理解析</h2><h3 id="9-1-The-Beatles-—-“Let-It-Be”（I-V-vi-IV-的教科书）"><a href="#9-1-The-Beatles-—-“Let-It-Be”（I-V-vi-IV-的教科书）" class="headerlink" title="9.1 The Beatles — “Let It Be”（I-V-vi-IV 的教科书）"></a>9.1 The Beatles — “Let It Be”（I-V-vi-IV 的教科书）</h3><p><strong>和弦进行</strong>：C - G - Am - F (I - V - vi - IV)</p>
+<p><strong>乐理亮点</strong>：</p>
+<ul>
+<li>最经典的 I-V-vi-IV 进行</li>
+<li>全曲只用4个和弦，和弦复杂度极低</li>
+<li>但旋律极强——说明<strong>好的旋律比复杂和声更重要</strong></li>
+<li>G → Am 的连接用到了 <strong>和弦转位</strong>（G 大调的主和弦 G-B-D，以 B 为低音，即 G&#x2F;B）</li>
+</ul>
+<h3 id="9-2-Adele-—-“Someone-Like-You”（降三度关系的戏剧性）"><a href="#9-2-Adele-—-“Someone-Like-You”（降三度关系的戏剧性）" class="headerlink" title="9.2 Adele — “Someone Like You”（降三度关系的戏剧性）"></a>9.2 Adele — “Someone Like You”（降三度关系的戏剧性）</h3><p><strong>和弦进行</strong>（ verse）：D - A - Bm - F#m (I - V - vi - iii)</p>
+<p><strong>乐理亮点</strong>：</p>
+<ul>
+<li>Verse 用了 <strong>降三度关系的转调</strong>（从 D 大调转到 B 大调，B 是 D 的 V 级）</li>
+<li>Bm (iii) → F#m (vi) 的大跳（从第3音跳到第6音）创造”情感高峰”</li>
+<li>Chorus 回到 D 大调，IV - V - I 终止感强烈</li>
+</ul>
+<h3 id="9-3-久石让-—-“Summer”（调式互换与情感色彩）"><a href="#9-3-久石让-—-“Summer”（调式互换与情感色彩）" class="headerlink" title="9.3 久石让 — “Summer”（调式互换与情感色彩）"></a>9.3 久石让 — “Summer”（调式互换与情感色彩）</h3><p><strong>和弦进行</strong>：C - G&#x2F;B - Am - G - F - Em - Dm - G</p>
+<p><strong>乐理亮点</strong>：</p>
+<ul>
+<li>G&#x2F;B（以 B 为低音的 G 和弦）是 <strong>借用和弦</strong></li>
+<li>Em (iii) 属于 C 大调，但带有小调的柔和感</li>
+<li><strong>变格终止（F - G - C）</strong> 用在多个乐句结尾</li>
+<li>简单的和弦 + 精美的旋律 + 独特的律动 &#x3D; 永恒的作品</li>
+</ul>
+<h3 id="9-4-Radiohead-—-“Creep”（大三和弦的意外色彩）"><a href="#9-4-Radiohead-—-“Creep”（大三和弦的意外色彩）" class="headerlink" title="9.4 Radiohead — “Creep”（大三和弦的意外色彩）"></a>9.4 Radiohead — “Creep”（大三和弦的意外色彩）</h3><p><strong>和弦进行</strong>（ verse）：G - B - C - Cm</p>
+<p><strong>乐理亮点</strong>：</p>
+<ul>
+<li>G → B 是 <strong>升四度跳进</strong>（极度不协和）</li>
+<li>C → Cm 是 <strong>突然的色彩转换</strong>（从大调到大调的平行小调）</li>
+<li><strong>降三度进行（C → Cm）</strong> 在流行音乐中极少见，制造强烈的”失落感”</li>
+<li>这首歌证明了：<strong>不协和不等于不好听，关键是用得恰到好处</strong></li>
+</ul>
+<h3 id="9-5-宋冬野-—-“董小姐”（五声音阶的灵魂）"><a href="#9-5-宋冬野-—-“董小姐”（五声音阶的灵魂）" class="headerlink" title="9.5 宋冬野 — “董小姐”（五声音阶的灵魂）"></a>9.5 宋冬野 — “董小姐”（五声音阶的灵魂）</h3><p><strong>和弦进行</strong>（ verse）：Am - C - F - F - G</p>
+<p><strong>乐理亮点</strong>：</p>
+<ul>
+<li>几乎只用 C 大调内的和弦，无升降号</li>
+<li>旋律基于 <strong>C 大调五声音阶</strong>（C D E G A），干净、质朴</li>
+<li>Am (vi) 开场奠定了”叙述感”的基调</li>
+<li>F (IV) → G (V) 的进行有轻微的”上升感”，引出副歌</li>
+</ul>
+<hr>
+<h2 id="第十章-从理论到创作：实战方法论"><a href="#第十章-从理论到创作：实战方法论" class="headerlink" title="第十章 从理论到创作：实战方法论"></a>第十章 从理论到创作：实战方法论</h2><h3 id="10-1-分析你喜欢的歌曲"><a href="#10-1-分析你喜欢的歌曲" class="headerlink" title="10.1 分析你喜欢的歌曲"></a>10.1 分析你喜欢的歌曲</h3><p>学习乐理最好的方式是把理论用到实际歌曲分析上。建议按照以下步骤进行：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">分析流程：</span><br><span class="line"></span><br><span class="line">1. 听：反复听歌曲，感受整体情绪走向</span><br><span class="line">2. 确定调性：是大调还是小调？什么调？</span><br><span class="line">3. 找根音：用耳朵听低音在走什么音</span><br><span class="line">4. 识别和弦：根据根音推断和弦性质（大小、增减）</span><br><span class="line">5. 标注进行：对照经典模板（I-V-vi-IV 等）</span><br><span class="line">6. 分析旋律：旋律用了哪些音阶？和和弦的关系？</span><br><span class="line">7. 拆解结构：Intro - Verse - Pre-Chorus - Chorus - Bridge</span><br><span class="line">8. 找特色：这首歌有哪些独特之处？</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="10-2-创作的第一步：确定基调"><a href="#10-2-创作的第一步：确定基调" class="headerlink" title="10.2 创作的第一步：确定基调"></a>10.2 创作的第一步：确定基调</h3><p>开始创作前，先回答几个关键问题：</p>
+<p><strong>情绪方向</strong>：</p>
+<ul>
+<li>明亮&#x2F;愉悦 → 大调</li>
+<li>忧郁&#x2F;内省 → 小调</li>
+<li>神秘&#x2F;超现实 → 调式互换</li>
+<li>怀旧&#x2F;复古 → bVII 或 bVI 借用和弦</li>
+</ul>
+<p><strong>速度与律动</strong>：</p>
+<ul>
+<li>抒情 ballad（BPM 60-80）→ 和弦节奏慢，让旋律呼吸</li>
+<li>中速流行（BPM 100-120）→ 和弦节奏适中</li>
+<li>快节奏舞曲（BPM 120-140）→ 和弦节奏快，大量切分</li>
+</ul>
+<p><strong>乐器编配</strong>：</p>
+<ul>
+<li>钢琴&#x2F;木吉他 → 开放和弦，柱式或分解</li>
+<li>电吉他 → 强力和弦（Power Chord），失真音效</li>
+<li>电子合成器 → 可尝试非常规音阶与和弦</li>
+</ul>
+<h3 id="10-3-旋律写作的七条黄金法则"><a href="#10-3-旋律写作的七条黄金法则" class="headerlink" title="10.3 旋律写作的七条黄金法则"></a>10.3 旋律写作的七条黄金法则</h3><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">1. 动机原则：用3-5个音的短动机发展</span><br><span class="line">   &quot;贝多芬的第五交响曲&quot;只用了4个音符（GEMM GEMM...）</span><br><span class="line"></span><br><span class="line">2. 级进为主，跳进为辅：</span><br><span class="line">   平滑的旋律更容易被记住</span><br><span class="line">   大跳留给人声高潮或情感爆发点</span><br><span class="line"></span><br><span class="line">3. 节奏重复创造记忆点：</span><br><span class="line">   相同的节奏型反复出现 → 记忆锚点</span><br><span class="line">   &quot;PPAP&quot;（Pen-Pineapple-Apple-Pen）就是节奏记忆的极致</span><br><span class="line"></span><br><span class="line">4. 高潮音通常在旋律最高点：</span><br><span class="line">   情感最强的音通常也是音高最高的音</span><br><span class="line"></span><br><span class="line">5. &quot;问答句&quot;结构：</span><br><span class="line">   第一乐句上升（疑问）→ 第二乐句回落（回答）</span><br><span class="line">   &quot;月亮代表我的心&quot;：上句疑问，下句陈述</span><br><span class="line"></span><br><span class="line">6. 留白也是表达：</span><br><span class="line">   不要填满每一个节拍</span><br><span class="line">   休止符是&quot;此时无声胜有声&quot;</span><br><span class="line"></span><br><span class="line">7. 唱出来检验：</span><br><span class="line">   如果写出来的旋律唱起来不舒服</span><br><span class="line">   即使理论正确也要调整</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="10-4-和声编配的实用策略"><a href="#10-4-和声编配的实用策略" class="headerlink" title="10.4 和声编配的实用策略"></a>10.4 和声编配的实用策略</h3><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">1. 从根音进行开始：</span><br><span class="line">   确定 I → V → ? 的骨架</span><br><span class="line">   根音的走向决定了和声的&quot;骨骼&quot;</span><br><span class="line"></span><br><span class="line">2. 低音线条优先：</span><br><span class="line">   先写低音线，再配和弦</span><br><span class="line">   好的低音线本身就是一条旋律</span><br><span class="line"></span><br><span class="line">3. &quot;安全 + 惊喜&quot;原则：</span><br><span class="line">   80% 使用调内和弦（熟悉感）</span><br><span class="line">   20% 使用借用和弦（惊喜感）</span><br><span class="line"></span><br><span class="line">4. 留白与呼吸：</span><br><span class="line">   不要每拍都填满和弦</span><br><span class="line">   间奏、前奏、尾奏可以只用 bass 和 drum</span><br><span class="line"></span><br><span class="line">5. 对比创造结构感：</span><br><span class="line">   Verse：简单和弦，铺垫情绪</span><br><span class="line">   Pre-Chorus：加入一些意外和弦，推高张力</span><br><span class="line">   Chorus：最强的和弦进行</span><br><span class="line">   Bridge：完全转调或大幅改变和弦色彩</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="10-5-实用工具推荐"><a href="#10-5-实用工具推荐" class="headerlink" title="10.5 实用工具推荐"></a>10.5 实用工具推荐</h3><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│  工具类型          │  推荐工具                        │  用途            │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  DAW（作曲/编曲） │  FL Studio、Logic Pro、           │  完整音乐制作    │</span><br><span class="line">│                  │  Ableton Live、Band-in-a-Box     │                  │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  乐理辅助          │  Hookpad、Captain Chords、        │  快速找到和弦进行│</span><br><span class="line">│                  │  GarageBand                       │                  │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  扒谱/分析         │  AnthemScore（AI识谱）、          │  把音频转为乐谱  │</span><br><span class="line">│                  │  Transcribe!                      │                  │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  虚拟乐器          │  Kontakt、Massive、Serum、        │  高质量音色      │</span><br><span class="line">│                  │  Omnisphere                        │                  │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  学习参考          │  Hooktheory、                   │  分析歌曲和弦    │</span><br><span class="line">│                  │  Songteller                        │                  │</span><br><span class="line">└──────────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="10-6-即兴演奏的入门路径"><a href="#10-6-即兴演奏的入门路径" class="headerlink" title="10.6 即兴演奏的入门路径"></a>10.6 即兴演奏的入门路径</h3><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">阶段一：熟悉指板（1-2个月）</span><br><span class="line">  - 记住每个品位的音名</span><br><span class="line">  - 熟练弹奏 C 大调音阶</span><br><span class="line">  - 在一个把位内弹奏五声音阶</span><br><span class="line"></span><br><span class="line">阶段二：和弦学习（2-3个月）</span><br><span class="line">  - 熟练弹奏基本和弦（C, Am, F, G, Dm, Em 等）</span><br><span class="line">  - 学习和弦转位</span><br><span class="line">  - 练习和弦连接（I-IV-V-I 等）</span><br><span class="line"></span><br><span class="line">阶段三：简单即兴（3-6个月）</span><br><span class="line">  - 跟着简单歌曲的 backing track 即兴</span><br><span class="line">  - 尝试 C 大调五声音阶即兴</span><br><span class="line">  - 录下来，回听，找感觉</span><br><span class="line"></span><br><span class="line">阶段四：调式扩展（6-12个月）</span><br><span class="line">  - 学习 Dorian、Mixolydian 等常用调式</span><br><span class="line">  - 用 ii-V-I 进行爵士即兴</span><br><span class="line">  - 开始尝试一些借用的和弦</span><br><span class="line"></span><br><span class="line">阶段五：形成风格（1年以上）</span><br><span class="line">  - 找到自己喜欢的声音</span><br><span class="line">  - 有意识地使用特定音阶和技巧</span><br><span class="line">  - 创作自己的即兴乐句模板</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h2 id="附录-音乐术语速查表"><a href="#附录-音乐术语速查表" class="headerlink" title="附录 音乐术语速查表"></a>附录 音乐术语速查表</h2><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│  分类        │  术语            │  含义                                    │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  音阶        │  Major           │  大调音阶，明亮                          │</span><br><span class="line">│              │  Minor           │  小调音阶，忧郁                          │</span><br><span class="line">│              │  Pentatonic      │  五声音阶                                │</span><br><span class="line">│              │  Blues           │  布鲁斯音阶                              │</span><br><span class="line">│              │  Modes           │  调式（7种）                             │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  音程        │  Unison          │  一度，同音                              │</span><br><span class="line">│              │  Octave          │  八度                                    │</span><br><span class="line">│              │  Fifth           │  五度                                    │</span><br><span class="line">│              │  Tritone         │  三全音，增四/减五度                      │</span><br><span class="line">│              │  Third           │  三度                                    │</span><br><span class="line">│              │  Seventh         │  七度                                    │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  和弦        │  Triad           │  三和弦                                  │</span><br><span class="line">│              │  Seventh         │  七和弦                                  │</span><br><span class="line">│              │  sus2/4          │  挂留和弦                                │</span><br><span class="line">│              │  add/extensions  │  延伸和弦                                │</span><br><span class="line">│              │  slash chord     │  斜杠和弦（低音指定）                     │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  进行        │  ii-V-I          │  爵士乐核心进行                          │</span><br><span class="line">│              │  I-V-vi-IV       │  流行音乐万能进行                        │</span><br><span class="line">│              │  Cadence          │  终止式                                  │</span><br><span class="line">│              │  Modulation       │  转调                                    │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  节奏        │  Tempo           │  速度（BPM）                             │</span><br><span class="line">│              │  Meter           │  节拍（4/4, 3/4等）                      │</span><br><span class="line">│              │  Syncopation     │  切分节奏                                │</span><br><span class="line">│              │  Groove          │  律动                                    │</span><br><span class="line">├──────────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│  结构        │  Verse           │  主歌                                    │</span><br><span class="line">│              │  Chorus          │  副歌                                    │</span><br><span class="line">│              │  Bridge          │  桥段                                    │</span><br><span class="line">│              │  Pre-chorus      │  预副歌                                  │</span><br><span class="line">│              │  Outro           │  尾奏                                    │</span><br><span class="line">└──────────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h2 id="结语：乐理是翅膀，不是枷锁"><a href="#结语：乐理是翅膀，不是枷锁" class="headerlink" title="结语：乐理是翅膀，不是枷锁"></a>结语：乐理是翅膀，不是枷锁</h2><p>这篇文章从声音的物理本质出发，系统地覆盖了现代西方音乐理论的核心框架：</p>
+<ul>
+<li><strong>声音与声波</strong>：理解了音乐”原材料”的物理特性</li>
+<li><strong>音程与音阶</strong>：掌握了音乐中”距离”与”颜色”的表达工具</li>
+<li><strong>十二平均律</strong>：理解了现代音乐标准化背后的数学原理</li>
+<li><strong>七种调式</strong>：获得了超越大小调的丰富色彩库</li>
+<li><strong>和弦家族</strong>：从三和弦到九和弦，从挂留到延伸，学会了构建和声</li>
+<li><strong>和弦进行</strong>：从万能 I-V-vi-IV 到爵士 ii-V-I，理解了音乐的”语法”</li>
+<li><strong>节奏节拍</strong>：从节拍结构到切分律动，学会了组织时间</li>
+<li><strong>现代特殊语言</strong>：接触了布鲁斯、爵士和声、降二代五等进阶技法</li>
+<li><strong>经典解析</strong>：用真实案例验证了理论的应用价值</li>
+<li><strong>实战方法</strong>：获得了从理论到创作的具体路径</li>
+</ul>
+<p>但请记住：<strong>乐理不是终点，而是起点。</strong></p>
+<blockquote>
+<p>真正的音乐创造发生在”掌握规则”之后。<br>当你能本能地运用 I-V-vi-IV 进行，<br>同时清楚地知道自己在做什么——<br>你就已经获得了自由。</p>
+</blockquote>
+<p>现在，打开你的乐器或 DAW，选一个调，弹几个和弦。让耳朵引导你，而不是被规则束缚。</p>
+<p>你的第一首歌，正在等待被创造。</p>
+<hr>
+<p><em>愿每个热爱音乐的人，都能听见音符背后的逻辑，创造属于自己的声音。</em></p>
+<hr>
+<blockquote>
+<p><strong>文章信息</strong><br>作者：Aar0n<br>发布日期：2026年5月24日<br>分类：音乐理论 | 标签：大调, 小调, 和弦, 乐理, 作曲<br>阅读时长：约 60 分钟</p>
+</blockquote>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 现代世界的乐理：从声波振动到流行音乐创作完全指南</li>
+        <li><strong>Author:</strong> Aar0n</li>
+        <li><strong>Created at
+                :</strong> 2026-05-24 22:24:12</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2026-05-24 22:25:29
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://www.aar0n-playstation.fun/2026/05/24/现代世界的乐理：从声波振动到流行音乐创作完全指南/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+
+		
+  <div class="recommended-article px-2 sm:px-6 md:px-8">
+   <div class="recommended-desktop">
+    <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+    </div>
+    <div class="recommended-article-group"><a class="recommended-article-item" href="/2026/05/24/hello-world/" title="Hello World" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Hello World" class="!max-w-none">
+  <span class="title">Hello World</span>
+</a></div>
+   </div>
+   <div class="recommended-mobile">
+   <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>推荐阅读</span>
+   </div>
+   <div class="recommended-article-group"><a class="recommended-article-item" href="/2026/05/24/hello-world/" title="Hello World" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Hello World" class="!max-w-none">
+  <span class="title">Hello World</span>
+</a></div>
+   </div>
+  </div>
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2026/05/24/hello-world/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">Hello World</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.js';
+
+      (function() {
+        const startPath = location.pathname;
+        const startTime = Date.now();
+        const retryDelay = 200;
+        const retryLimit = 5000;
+
+        const runWaline = () => {
+          if (location.pathname !== startPath) {
+            return;
+          }
+
+          const container = document.getElementById('waline');
+          if (!container) {
+            if (Date.now() - startTime < retryLimit) {
+              setTimeout(runWaline, retryDelay);
+            }
+            return;
+          }
+
+          if (window.redefineWalineInstance?.destroy) {
+            window.redefineWalineInstance.destroy();
+          }
+
+          container.innerHTML = '';
+          window.redefineWalineInstance = init({
+            el: '#waline',
+            serverURL: 'https://console.neon.tech/',
+            path: location.pathname,
+            dark: 'body[class~="dark-mode"]',
+            reaction: false,
+            requiredMeta: ['nick', 'mail'],
+            emoji: [],
+                      lang: 'zh-CN',
+          });
+        };
+
+        runWaline();
+      })();
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">现代世界的乐理：从声波振动到流行音乐创作完全指南</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%A3%B0%E9%9F%B3%E7%9A%84%E7%89%A9%E7%90%86%E6%9C%AC%E8%B4%A8%EF%BC%9A%E9%9F%B3%E4%B9%90%E4%BB%8E%E4%BD%95%E8%80%8C%E6%9D%A5"><span class="nav-text">第一章 声音的物理本质：音乐从何而来</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%A3%B0%E6%B3%A2%EF%BC%9A%E9%9F%B3%E4%B9%90%E7%9A%84%E2%80%9D%E5%8E%9F%E6%9D%90%E6%96%99%E2%80%9D"><span class="nav-text">1.1 声波：音乐的”原材料”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E9%A2%91%E7%8E%87%E4%B8%8E%E9%9F%B3%E9%AB%98%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-text">1.2 频率与音高的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E4%BA%BA%E7%B1%BB%E5%90%AC%E8%A7%89%E7%9A%84%E7%A7%98%E5%AF%86"><span class="nav-text">1.3 人类听觉的秘密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E8%B0%90%E6%B3%A2%E4%B8%8E%E9%9F%B3%E8%89%B2%E7%9A%84%E5%A5%A5%E7%A7%98"><span class="nav-text">1.4 谐波与音色的奥秘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E5%A3%B0%E9%9F%B3%E7%9A%84%E7%A9%BA%E9%97%B4%E5%B1%9E%E6%80%A7"><span class="nav-text">1.5 声音的空间属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E9%9F%B3%E9%AB%98%E4%B8%8E%E9%9F%B3%E7%A8%8B%EF%BC%9A%E9%9F%B3%E4%B9%90%E7%9A%84%E8%B7%9D%E7%A6%BB%E6%84%9F"><span class="nav-text">第二章 音高与音程：音乐的距离感</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%BB%80%E4%B9%88%E6%98%AF%E9%9F%B3%E7%A8%8B%EF%BC%9F"><span class="nav-text">2.1 什么是音程？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%BA%A6%E6%95%B0%EF%BC%9A%E8%B7%A8%E8%B6%8A%E4%BA%86%E5%A4%9A%E5%B0%91%E4%B8%AA%E2%80%9D%E5%8F%B0%E9%98%B6%E2%80%9D"><span class="nav-text">2.2 度数：跨越了多少个”台阶”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E9%9F%B3%E7%A8%8B%E7%9A%84%E6%80%A7%E8%B4%A8%EF%BC%9A%E5%A4%A7%E3%80%81%E5%B0%8F%E3%80%81%E5%A2%9E%E3%80%81%E5%87%8F%E3%80%81%E7%BA%AF"><span class="nav-text">2.3 音程的性质：大、小、增、减、纯</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E9%9F%B3%E7%A8%8B%E5%AF%B9%E7%85%A7%E8%A1%A8"><span class="nav-text">2.4 音程对照表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-%E4%B8%89%E5%85%A8%E9%9F%B3%EF%BC%9A%E9%9F%B3%E4%B9%90%E4%B8%AD%E6%9C%80%E4%B8%8D%E5%AE%89%E5%88%86%E7%9A%84%E9%9F%B3%E7%A8%8B"><span class="nav-text">2.5 三全音：音乐中最不安分的音程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-%E9%9F%B3%E7%A8%8B%E7%9A%84%E8%BD%AC%E4%BD%8D"><span class="nav-text">2.6 音程的转位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-%E9%9F%B3%E7%A8%8B%E7%9A%84%E6%83%85%E6%84%9F%E8%89%B2%E5%BD%A9"><span class="nav-text">2.7 音程的情感色彩</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%8D%81%E4%BA%8C%E5%B9%B3%E5%9D%87%E5%BE%8B%EF%BC%9A%E7%8E%B0%E4%BB%A3%E9%9F%B3%E4%B9%90%E7%9A%84%E5%9F%BA%E7%9F%B3"><span class="nav-text">第三章 十二平均律：现代音乐的基石</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%8D%81%E4%BA%8C%E5%B9%B3%E5%9D%87%E5%BE%8B%EF%BC%9F"><span class="nav-text">3.1 为什么需要十二平均律？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%8D%81%E4%BA%8C%E5%B9%B3%E5%9D%87%E5%BE%8B%E7%9A%84%E6%95%B0%E5%AD%A6%E4%B9%8B%E7%BE%8E"><span class="nav-text">3.2 十二平均律的数学之美</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E9%92%A2%E7%90%B4%E4%B8%8A%E7%9A%84%E5%8D%81%E4%BA%8C%E5%B9%B3%E5%9D%87%E5%BE%8B"><span class="nav-text">3.3 钢琴上的十二平均律</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E7%AD%89%E9%9F%B3%EF%BC%9A%E5%90%8C%E4%B8%80%E4%B8%AA%E9%9F%B3%EF%BC%8C%E4%B8%8D%E5%90%8C%E7%9A%84%E5%90%8D%E5%AD%97"><span class="nav-text">3.4 等音：同一个音，不同的名字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-%E5%8D%81%E4%BA%8C%E5%B9%B3%E5%9D%87%E5%BE%8B%E7%9A%84%E4%BB%A3%E4%BB%B7%E4%B8%8E%E6%94%B6%E7%9B%8A"><span class="nav-text">3.5 十二平均律的代价与收益</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E9%9F%B3%E9%98%B6%E4%B8%8E%E8%B0%83%E5%BC%8F%EF%BC%9A%E9%9F%B3%E4%B9%90%E7%9A%84%E8%89%B2%E5%BD%A9%E8%AF%AD%E8%A8%80"><span class="nav-text">第四章 音阶与调式：音乐的色彩语言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E4%BB%80%E4%B9%88%E6%98%AF%E9%9F%B3%E9%98%B6%EF%BC%9F"><span class="nav-text">4.1 什么是音阶？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E8%87%AA%E7%84%B6%E5%A4%A7%E8%B0%83%EF%BC%9A%E6%9C%80%E2%80%9D%E6%A0%87%E5%87%86%E2%80%9D%E7%9A%84%E9%A2%9C%E8%89%B2"><span class="nav-text">4.2 自然大调：最”标准”的颜色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E8%87%AA%E7%84%B6%E5%B0%8F%E8%B0%83%EF%BC%9A%E5%BF%A7%E9%83%81%E7%9A%84%E8%93%9D%E8%89%B2"><span class="nav-text">4.3 自然小调：忧郁的蓝色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E5%92%8C%E5%A3%B0%E5%B0%8F%E8%B0%83%EF%BC%9A%E8%A7%A3%E5%86%B3%E5%BC%A0%E5%8A%9B%E7%9A%84%E7%A7%98%E5%AF%86"><span class="nav-text">4.4 和声小调：解决张力的秘密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-%E6%97%8B%E5%BE%8B%E5%B0%8F%E8%B0%83%EF%BC%9A%E5%B9%B3%E6%BB%91%E7%9A%84%E8%A7%A3%E5%86%B3"><span class="nav-text">4.5 旋律小调：平滑的解决</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-%E4%BA%94%E5%A3%B0%E9%9F%B3%E9%98%B6%EF%BC%9A%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E9%9F%B3%E4%B9%90%E8%AF%AD%E8%A8%80"><span class="nav-text">4.6 五声音阶：最简单的音乐语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-7-%E4%B8%83%E7%A7%8D%E6%95%99%E4%BC%9A%E8%B0%83%E5%BC%8F%EF%BC%9A%E8%B6%85%E8%B6%8A%E5%A4%A7%E5%B0%8F%E8%B0%83%E7%9A%84%E8%89%B2%E5%BD%A9"><span class="nav-text">4.7 七种教会调式：超越大小调的色彩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-8-%E8%B0%83%E5%BC%8F%E4%BA%92%E6%8D%A2%EF%BC%9A%E7%8E%B0%E4%BB%A3%E6%B5%81%E8%A1%8C%E9%9F%B3%E4%B9%90%E7%9A%84%E7%A7%98%E5%AF%86%E6%AD%A6%E5%99%A8"><span class="nav-text">4.8 调式互换：现代流行音乐的秘密武器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%92%8C%E5%BC%A6%EF%BC%9A%E9%9F%B3%E7%AC%A6%E7%9A%84%E5%8C%96%E5%AD%A6%E5%8F%8D%E5%BA%94"><span class="nav-text">第五章 和弦：音符的化学反应</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E4%BB%80%E4%B9%88%E6%98%AF%E5%92%8C%E5%BC%A6%EF%BC%9F"><span class="nav-text">5.1 什么是和弦？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E4%B8%89%E5%92%8C%E5%BC%A6%EF%BC%9A%E5%9B%9B%E7%A7%8D%E5%9F%BA%E6%9C%AC%E5%BD%A2%E6%80%81"><span class="nav-text">5.2 三和弦：四种基本形态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-%E4%B8%83%E5%92%8C%E5%BC%A6%EF%BC%9A%E7%8E%B0%E4%BB%A3%E9%9F%B3%E4%B9%90%E7%9A%84%E4%B8%BB%E8%A7%92"><span class="nav-text">5.3 七和弦：现代音乐的主角</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-%E5%BB%B6%E4%BC%B8%E5%92%8C%E5%BC%A6%EF%BC%9A%E8%B6%85%E8%B6%8A%E4%B8%83%E5%BA%A6"><span class="nav-text">5.4 延伸和弦：超越七度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-%E6%8C%82%E7%95%99%E5%92%8C%E5%BC%A6%EF%BC%9A%E6%82%AC%E8%80%8C%E6%9C%AA%E5%86%B3%E7%9A%84%E5%BC%A0%E5%8A%9B"><span class="nav-text">5.5 挂留和弦：悬而未决的张力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-6-%E5%92%8C%E5%BC%A6%E8%BD%AC%E4%BD%8D%E4%B8%8E-slash-chords"><span class="nav-text">5.6 和弦转位与 slash chords</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%92%8C%E5%BC%A6%E8%BF%9B%E8%A1%8C%EF%BC%9A%E6%B5%81%E8%A1%8C%E9%9F%B3%E4%B9%90%E7%9A%84%E5%9F%BA%E5%9B%A0%E5%AF%86%E7%A0%81"><span class="nav-text">第六章 和弦进行：流行音乐的基因密码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E4%BB%80%E4%B9%88%E6%98%AF%E5%92%8C%E5%BC%A6%E8%BF%9B%E8%A1%8C%EF%BC%9F"><span class="nav-text">6.1 什么是和弦进行？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E5%8A%9F%E8%83%BD%E7%90%86%E8%AE%BA%EF%BC%9A%E5%92%8C%E5%A3%B0%E7%9A%84%E5%8C%96%E5%AD%A6%E5%91%A8%E6%9C%9F%E8%A1%A8"><span class="nav-text">6.2 功能理论：和声的化学周期表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-%E4%B8%87%E8%83%BD%E5%92%8C%E5%BC%A6%E8%BF%9B%E8%A1%8C%EF%BC%9AI-V-vi-IV"><span class="nav-text">6.3 万能和弦进行：I-V-vi-IV</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-4-%E5%85%B6%E4%BB%96%E7%BB%8F%E5%85%B8%E5%92%8C%E5%BC%A6%E8%BF%9B%E8%A1%8C"><span class="nav-text">6.4 其他经典和弦进行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-5-%E7%BB%88%E6%AD%A2%E5%BC%8F%EF%BC%9A%E4%B9%90%E5%8F%A5%E7%9A%84%E6%A0%87%E7%82%B9%E7%AC%A6%E5%8F%B7"><span class="nav-text">6.5 终止式：乐句的标点符号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-6-%E8%BD%AC%E8%B0%83%E4%B8%8E%E8%B0%83%E5%BC%8F%E4%BA%92%E6%8D%A2"><span class="nav-text">6.6 转调与调式互换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-7-Jazz-ii-V-I%EF%BC%9A%E7%88%B5%E5%A3%AB%E4%B9%90%E7%9A%84%E6%A0%B8%E5%BF%83%E8%AF%AD%E6%B3%95"><span class="nav-text">6.7 Jazz ii-V-I：爵士乐的核心语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0-%E8%8A%82%E5%A5%8F%E4%B8%8E%E8%8A%82%E6%8B%8D%EF%BC%9A%E9%9F%B3%E4%B9%90%E7%9A%84%E9%AA%A8%E6%9E%B6"><span class="nav-text">第七章 节奏与节拍：音乐的骨架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-%E6%8B%8D%E5%AD%90%E4%B8%8E%E8%8A%82%E6%8B%8D%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">7.1 拍子与节拍的基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-%E5%B8%B8%E7%94%A8%E8%8A%82%E6%8B%8D%E7%B1%BB%E5%9E%8B"><span class="nav-text">7.2 常用节拍类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-%E5%88%87%E5%88%86%E8%8A%82%E5%A5%8F%EF%BC%9A%E6%89%93%E7%A0%B4%E9%87%8D%E9%9F%B3%E7%9A%84%E8%89%BA%E6%9C%AF"><span class="nav-text">7.3 切分节奏：打破重音的艺术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-4-%E5%A4%8D%E8%8A%82%E5%A5%8F%E4%B8%8E%E5%A4%8D%E5%90%88%E8%8A%82%E6%8B%8D"><span class="nav-text">7.4 复节奏与复合节拍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-5-%E6%97%B6%E5%80%BC%E4%B8%8E%E9%9F%B3%E7%AC%A6%E9%95%BF%E5%BA%A6"><span class="nav-text">7.5 时值与音符长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-6-%E5%BE%8B%E5%8A%A8%EF%BC%88Groove%EF%BC%89%EF%BC%9A%E8%8A%82%E5%A5%8F%E7%9A%84%E7%81%B5%E9%AD%82"><span class="nav-text">7.6 律动（Groove）：节奏的灵魂</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AB%E7%AB%A0-%E7%8E%B0%E4%BB%A3%E9%9F%B3%E4%B9%90%E7%9A%84%E7%89%B9%E6%AE%8A%E8%AF%AD%E8%A8%80"><span class="nav-text">第八章 现代音乐的特殊语言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-%E5%B8%83%E9%B2%81%E6%96%AF%E9%9F%B3%E9%98%B6%EF%BC%9A%E7%88%B5%E5%A3%AB%E4%B8%8E%E6%91%87%E6%BB%9A%E7%9A%84%E7%81%B5%E9%AD%82"><span class="nav-text">8.1 布鲁斯音阶：爵士与摇滚的灵魂</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-%E7%88%B5%E5%A3%AB%E5%92%8C%E5%BC%A6%E6%A0%87%E8%AE%B0%E7%B3%BB%E7%BB%9F"><span class="nav-text">8.2 爵士和弦标记系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-3-%E9%99%8D%E4%BA%8C%E4%BB%A3%E4%BA%94%EF%BC%88Tritone-Substitution%EF%BC%89"><span class="nav-text">8.3 降二代五（Tritone Substitution）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-4-%E9%9F%B3%E9%98%B6%E9%80%89%E6%8B%A9%E4%B8%8E%E5%8D%B3%E5%85%B4"><span class="nav-text">8.4 音阶选择与即兴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-5-%E5%A3%B0%E9%83%A8%E8%BF%9B%E8%A1%8C%EF%BC%88Voice-Leading%EF%BC%89"><span class="nav-text">8.5 声部进行（Voice Leading）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B9%9D%E7%AB%A0-%E7%BB%8F%E5%85%B8%E6%AD%8C%E6%9B%B2%E4%B9%90%E7%90%86%E8%A7%A3%E6%9E%90"><span class="nav-text">第九章 经典歌曲乐理解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#9-1-The-Beatles-%E2%80%94-%E2%80%9CLet-It-Be%E2%80%9D%EF%BC%88I-V-vi-IV-%E7%9A%84%E6%95%99%E7%A7%91%E4%B9%A6%EF%BC%89"><span class="nav-text">9.1 The Beatles — “Let It Be”（I-V-vi-IV 的教科书）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-2-Adele-%E2%80%94-%E2%80%9CSomeone-Like-You%E2%80%9D%EF%BC%88%E9%99%8D%E4%B8%89%E5%BA%A6%E5%85%B3%E7%B3%BB%E7%9A%84%E6%88%8F%E5%89%A7%E6%80%A7%EF%BC%89"><span class="nav-text">9.2 Adele — “Someone Like You”（降三度关系的戏剧性）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-3-%E4%B9%85%E7%9F%B3%E8%AE%A9-%E2%80%94-%E2%80%9CSummer%E2%80%9D%EF%BC%88%E8%B0%83%E5%BC%8F%E4%BA%92%E6%8D%A2%E4%B8%8E%E6%83%85%E6%84%9F%E8%89%B2%E5%BD%A9%EF%BC%89"><span class="nav-text">9.3 久石让 — “Summer”（调式互换与情感色彩）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-4-Radiohead-%E2%80%94-%E2%80%9CCreep%E2%80%9D%EF%BC%88%E5%A4%A7%E4%B8%89%E5%92%8C%E5%BC%A6%E7%9A%84%E6%84%8F%E5%A4%96%E8%89%B2%E5%BD%A9%EF%BC%89"><span class="nav-text">9.4 Radiohead — “Creep”（大三和弦的意外色彩）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-5-%E5%AE%8B%E5%86%AC%E9%87%8E-%E2%80%94-%E2%80%9C%E8%91%A3%E5%B0%8F%E5%A7%90%E2%80%9D%EF%BC%88%E4%BA%94%E5%A3%B0%E9%9F%B3%E9%98%B6%E7%9A%84%E7%81%B5%E9%AD%82%EF%BC%89"><span class="nav-text">9.5 宋冬野 — “董小姐”（五声音阶的灵魂）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E7%AB%A0-%E4%BB%8E%E7%90%86%E8%AE%BA%E5%88%B0%E5%88%9B%E4%BD%9C%EF%BC%9A%E5%AE%9E%E6%88%98%E6%96%B9%E6%B3%95%E8%AE%BA"><span class="nav-text">第十章 从理论到创作：实战方法论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-%E5%88%86%E6%9E%90%E4%BD%A0%E5%96%9C%E6%AC%A2%E7%9A%84%E6%AD%8C%E6%9B%B2"><span class="nav-text">10.1 分析你喜欢的歌曲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-2-%E5%88%9B%E4%BD%9C%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E7%A1%AE%E5%AE%9A%E5%9F%BA%E8%B0%83"><span class="nav-text">10.2 创作的第一步：确定基调</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-3-%E6%97%8B%E5%BE%8B%E5%86%99%E4%BD%9C%E7%9A%84%E4%B8%83%E6%9D%A1%E9%BB%84%E9%87%91%E6%B3%95%E5%88%99"><span class="nav-text">10.3 旋律写作的七条黄金法则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-4-%E5%92%8C%E5%A3%B0%E7%BC%96%E9%85%8D%E7%9A%84%E5%AE%9E%E7%94%A8%E7%AD%96%E7%95%A5"><span class="nav-text">10.4 和声编配的实用策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-5-%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90"><span class="nav-text">10.5 实用工具推荐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-6-%E5%8D%B3%E5%85%B4%E6%BC%94%E5%A5%8F%E7%9A%84%E5%85%A5%E9%97%A8%E8%B7%AF%E5%BE%84"><span class="nav-text">10.6 即兴演奏的入门路径</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84%E5%BD%95-%E9%9F%B3%E4%B9%90%E6%9C%AF%E8%AF%AD%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="nav-text">附录 音乐术语速查表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD%EF%BC%9A%E4%B9%90%E7%90%86%E6%98%AF%E7%BF%85%E8%86%80%EF%BC%8C%E4%B8%8D%E6%98%AF%E6%9E%B7%E9%94%81"><span class="nav-text">结语：乐理是翅膀，不是枷锁</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Aar0n</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        2 posts in total
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.9.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container" role="dialog" aria-modal="true" aria-label="Image viewer">
+	<button class="image-viewer-close" type="button" aria-label="Close">
+		<i class="fa-solid fa-xmark"></i>
+	</button>
+	<button class="image-viewer-prev" type="button" aria-label="Prev">
+		<i class="fa-solid fa-chevron-left"></i>
+	</button>
+	<div class="image-viewer-frame">
+		<img src="" alt="">
+	</div>
+	<div class="image-viewer-exif-panel hidden absolute left-1/2 bottom-20 -translate-x-1/2 w-[min(92vw,420px)] max-h-[60vh] overflow-hidden rounded-2xl bg-background-color-transparent-80 p-4 text-left shadow-redefine-flat backdrop-blur-md" role="dialog" aria-label="EXIF" aria-hidden="true">
+		<div class="flex items-center justify-between mb-3">
+			<span class="text-sm font-semibold text-first-text-color">EXIF</span>
+			<button class="image-viewer-exif-close flex h-8 w-8 items-center justify-center rounded-full bg-background-color-transparent-80 text-first-text-color transition hover:bg-background-color-transparent-40" type="button" aria-label="Close">
+				<i class="fa-solid fa-xmark text-[0.65rem]"></i>
+			</button>
+		</div>
+		<div class="image-viewer-exif-cards grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto pr-1 scrollbar-hide"></div>
+		<template class="image-viewer-exif-card-template">
+			<div class="rounded-lg bg-background-color-transparent-40 px-3 py-2">
+				<div class="image-viewer-exif-card-header flex items-center gap-2 mb-1">
+					<i class="image-viewer-exif-card-icon fa-solid fa-circle-info text-xs text-third-text-color"></i>
+					<div class="image-viewer-exif-card-title text-xs font-semibold text-first-text-color"></div>
+				</div>
+				<div class="image-viewer-exif-card-items flex flex-col gap-1"></div>
+			</div>
+		</template>
+	</div>
+	<button class="image-viewer-exif-toggle flex items-center gap-2 hidden absolute left-1/2 bottom-6 -translate-x-1/2 rounded-full border border-border-color bg-background-color-transparent-80 px-4 py-2 text-first-text-color backdrop-blur-md transition hover:bg-background-color-transparent-40" type="button" aria-label="EXIF" aria-expanded="false">
+		<i class="fa-solid fa-circle-info text-xs"></i>
+		<span class="text-xs font-semibold uppercase tracking-wider">EXIF</span>
+	</button>
+	<button class="image-viewer-next" type="button" aria-label="Next">
+		<i class="fa-solid fa-chevron-right"></i>
+	</button>
+</div>
+
+
+	
+	<div class="search-pop-overlay">
+	<div class="popup search-popup">
+		<div class="search-header">
+			<span class="search-input-field-pre">
+				<i class="fa-solid fa-keyboard"></i>
+			</span>
+			<div class="search-input-container">
+				<input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Search..." spellcheck="false" type="search" class="search-input">
+			</div>
+			<span class="popup-btn-close">
+				<i class="fa-solid fa-times"></i>
+			</span>
+		</div>
+		<div id="search-result">
+			<div id="no-result">
+				<i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+			</div>
+		</div>
+	</div>
+</div>
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    window.swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+
+    window.dispatchEvent(
+        new CustomEvent("redefine:swup:ready", {
+            detail: {
+                swup: window.swup,
+            },
+        }),
+    );
+</script>
+
+
+
+
+	
+<script src="/js/build/main.js" type="module"></script>
+
+
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+
+	
+	<div id="aplayer"></div>
+
+<script src="/js/build/libs/APlayer.min.js"></script>
+
+
+<script src="/js/build/plugins/aplayer.js"></script>
+
+
+	
+</body>
+
+</html>
